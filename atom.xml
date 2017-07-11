@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-07-11T02:22:22.000Z</updated>
+  <updated>2017-07-11T02:28:56.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,9 +20,9 @@
     <link href="http://yoursite.com/2017/07/11/%E6%9C%AA%E6%9D%A5%E5%B7%B2%E6%9D%A5-%E6%89%93%E5%BC%80%E6%96%B0%E4%B8%96%E7%95%8C/"/>
     <id>http://yoursite.com/2017/07/11/未来已来-打开新世界/</id>
     <published>2017-07-11T02:18:47.000Z</published>
-    <updated>2017-07-11T02:22:22.000Z</updated>
+    <updated>2017-07-11T02:28:56.000Z</updated>
     
-    <content type="html"><![CDATA[<p>Hi,大家好，我是此刻柳暗花明，本名宋波，目前在做iOS开发。我希望自己会是一个实干家，因为我有很多梦想，我想看到它们开花结果。欢迎来到我的地盘，嘿嘿！😜</p>
+    <content type="html"><![CDATA[<p>Hi,大家好，我是此刻柳暗花明，本名宋波，目前在做iOS开发。我希望自己会是一个实干家，因为我有很多梦想，我想看到它们开花结果。欢迎来到我的地盘，嘿嘿！😜<br><a id="more"></a></p>
 <blockquote>
 <p>赠人玫瑰，手有余香。</p>
 </blockquote>
@@ -33,11 +33,7 @@
     
     <summary type="html">
     
-      &lt;p&gt;Hi,大家好，我是此刻柳暗花明，本名宋波，目前在做iOS开发。我希望自己会是一个实干家，因为我有很多梦想，我想看到它们开花结果。欢迎来到我的地盘，嘿嘿！😜&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;赠人玫瑰，手有余香。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;最近抽时间搭
+      &lt;p&gt;Hi,大家好，我是此刻柳暗花明，本名宋波，目前在做iOS开发。我希望自己会是一个实干家，因为我有很多梦想，我想看到它们开花结果。欢迎来到我的地盘，嘿嘿！😜&lt;br&gt;
     
     </summary>
     
