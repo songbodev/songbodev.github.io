@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-07-05T05:16:57.000Z</updated>
+  <updated>2017-07-11T02:12:46.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,38 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>未来已来，打开新世界</title>
+    <link href="http://yoursite.com/2017/07/11/%E6%9C%AA%E6%9D%A5%E5%B7%B2%E6%9D%A5%20-%20%E6%89%93%E5%BC%80%E6%96%B0%E4%B8%96%E7%95%8C/"/>
+    <id>http://yoursite.com/2017/07/11/未来已来 - 打开新世界/</id>
+    <published>2017-07-11T02:09:22.000Z</published>
+    <updated>2017-07-11T02:12:46.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>###未来已来 - 打开新世界</p>
+<p>Hi,大家好，我是此刻柳暗花明，本名宋波，目前在做iOS开发。我希望自己会是一个实干家，因为我有很多梦想，我想看到它们开花结果。欢迎来到我的地盘，嘿嘿！😜</p>
+<blockquote>
+<p>赠人玫瑰，手有余香。</p>
+</blockquote>
+<p>最近抽时间搭建了真正属于自己的博客，今后我会在此分享学习心得，记录生活感受。如果能够在写作过程中帮助到一些人，或者为他们带去一些启发，我一定会非常开心。</p>
+<p>每个人都会憧憬更加美好的未来，而未来从哪里来？从此刻来。好好的把握现在，认真的活在当下，一切希望都会水到渠成，我们都会此刻柳暗花明。</p>
+<p>未来已来——未来由此刻创造，未来诞生于此刻。新世界已打开，我是此刻柳暗花明，祝你好运！</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;###未来已来 - 打开新世界&lt;/p&gt;
+&lt;p&gt;Hi,大家好，我是此刻柳暗花明，本名宋波，目前在做iOS开发。我希望自己会是一个实干家，因为我有很多梦想，我想看到它们开花结果。欢迎来到我的地盘，嘿嘿！😜&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;赠人玫瑰，手有余香。&lt;/p&gt;
+
+    
+    </summary>
+    
+    
+      <category term="感悟" scheme="http://yoursite.com/tags/%E6%84%9F%E6%82%9F/"/>
+    
+  </entry>
   
   <entry>
     <title>Hello World</title>
