@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="感悟," />
+  <meta name="keywords" content="iOS,技术," />
 
 
 
@@ -95,17 +95,36 @@
 
 
 
-<meta name="description" content="Hi,大家好，我是此刻柳暗花明，本名宋波，目前在做iOS开发。我希望自己会是一个实干家，因为我有很多梦想，我想看到它们开花结果。欢迎来到我的地盘，嘿嘿！😜">
-<meta name="keywords" content="感悟">
+<meta name="description" content="前言iOS开发中我们经常需要用到各种库，比如开源库AFNetworking,静态库BaiduMapAPI_Base.framework（百度地图SDK）,还有系统动态库UIKit.framework等等，今天我们来学习一下相关知识并自己制作一个framework静态库。">
+<meta name="keywords" content="iOS,技术">
 <meta property="og:type" content="article">
-<meta property="og:title" content="未来已来 - 打开新世界">
-<meta property="og:url" content="http://yoursite.com/2017/07/11/未来已来-打开新世界/index.html">
+<meta property="og:title" content="iOS中制作Framework静态库">
+<meta property="og:url" content="http://yoursite.com/2017/08/07/iOS中制作Framework静态库/index.html">
 <meta property="og:site_name" content="未来已来">
-<meta property="og:description" content="Hi,大家好，我是此刻柳暗花明，本名宋波，目前在做iOS开发。我希望自己会是一个实干家，因为我有很多梦想，我想看到它们开花结果。欢迎来到我的地盘，嘿嘿！😜">
-<meta property="og:updated_time" content="2017-07-11T02:28:56.000Z">
+<meta property="og:description" content="前言iOS开发中我们经常需要用到各种库，比如开源库AFNetworking,静态库BaiduMapAPI_Base.framework（百度地图SDK）,还有系统动态库UIKit.framework等等，今天我们来学习一下相关知识并自己制作一个framework静态库。">
+<meta property="og:image" content="http://osv8n47s0.bkt.clouddn.com/blog/1424051789719516.png">
+<meta property="og:image" content="http://osv8n47s0.bkt.clouddn.com/blog/1424051789127826.png">
+<meta property="og:image" content="http://osv8n47s0.bkt.clouddn.com/select_template.png">
+<meta property="og:image" content="http://osv8n47s0.bkt.clouddn.com/Snip20170803_1.png">
+<meta property="og:image" content="http://osv8n47s0.bkt.clouddn.com/add_code.png">
+<meta property="og:image" content="http://osv8n47s0.bkt.clouddn.com/select_type.png">
+<meta property="og:image" content="http://osv8n47s0.bkt.clouddn.com/select_headers.png">
+<meta property="og:image" content="http://osv8n47s0.bkt.clouddn.com/Snip20170803_3.png">
+<meta property="og:image" content="http://osv8n47s0.bkt.clouddn.com/edit_scheme.png">
+<meta property="og:image" content="http://osv8n47s0.bkt.clouddn.com/select_release.png">
+<meta property="og:image" content="http://osv8n47s0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-08-03%20%E4%B8%8B%E5%8D%882.44.56.png">
+<meta property="og:image" content="http://osv8n47s0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-08-03%20%E4%B8%8B%E5%8D%882.46.16.png">
+<meta property="og:image" content="http://osv8n47s0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-08-03%20%E4%B8%8B%E5%8D%882.50.48.png">
+<meta property="og:image" content="http://osv8n47s0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-08-03%20%E4%B8%8B%E5%8D%882.50.17.png">
+<meta property="og:image" content="http://osv8n47s0.bkt.clouddn.com/Snip20170807_1.png">
+<meta property="og:image" content="http://osv8n47s0.bkt.clouddn.com/Snip20170807_2.png">
+<meta property="og:image" content="http://osv8n47s0.bkt.clouddn.com/Snip20170807_3.png">
+<meta property="og:image" content="http://osv8n47s0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-08-03%20%E4%B8%8B%E5%8D%883.00.33.png">
+<meta property="og:updated_time" content="2017-08-07T11:00:42.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="未来已来 - 打开新世界">
-<meta name="twitter:description" content="Hi,大家好，我是此刻柳暗花明，本名宋波，目前在做iOS开发。我希望自己会是一个实干家，因为我有很多梦想，我想看到它们开花结果。欢迎来到我的地盘，嘿嘿！😜">
+<meta name="twitter:title" content="iOS中制作Framework静态库">
+<meta name="twitter:description" content="前言iOS开发中我们经常需要用到各种库，比如开源库AFNetworking,静态库BaiduMapAPI_Base.framework（百度地图SDK）,还有系统动态库UIKit.framework等等，今天我们来学习一下相关知识并自己制作一个framework静态库。">
+<meta name="twitter:image" content="http://osv8n47s0.bkt.clouddn.com/blog/1424051789719516.png">
 
 
 
@@ -133,13 +152,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/07/11/未来已来-打开新世界/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/08/07/iOS中制作Framework静态库/"/>
 
 
 
 
 
-  <title>未来已来 - 打开新世界 | 未来已来</title>
+  <title>iOS中制作Framework静态库 | 未来已来</title>
   
 
 
@@ -322,7 +341,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/11/未来已来-打开新世界/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/07/iOS中制作Framework静态库/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="此刻柳暗花明">
@@ -339,7 +358,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">未来已来 - 打开新世界</h1>
+          <h1 class="post-title" itemprop="name headline">iOS中制作Framework静态库</h1>
         
 
         <div class="post-meta">
@@ -351,8 +370,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-11T10:18:47+08:00">
-                2017-07-11
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-07T18:47:18+08:00">
+                2017-08-07
               </time>
             
 
@@ -370,9 +389,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/07/11/未来已来-打开新世界/#comments" itemprop="discussionUrl">
+                <a href="/2017/08/07/iOS中制作Framework静态库/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/07/11/未来已来-打开新世界/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/08/07/iOS中制作Framework静态库/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -402,13 +421,67 @@
       
 
       
-        <p>Hi,大家好，我是此刻柳暗花明，本名宋波，目前在做iOS开发。我希望自己会是一个实干家，因为我有很多梦想，我想看到它们开花结果。欢迎来到我的地盘，嘿嘿！😜<br><a id="more"></a></p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>iOS开发中我们经常需要用到各种库，比如开源库AFNetworking,静态库BaiduMapAPI_Base.framework（百度地图SDK）,还有系统动态库UIKit.framework等等，今天我们来学习一下相关知识并自己制作一个framework静态库。<br><a id="more"></a></p>
+<h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><h3 id="库"><a href="#库" class="headerlink" title="库"></a>库</h3><p>什么是库？</p>
+<p>库是程序代码的集合，是共享程序代码的一种方式。<br>根据源代码的公开情况，库可以分为开源库和闭源库两种类型。</p>
+<p>开源库：公开源代码，能看到具体实现，比如 SDWebImage 、 AFNetworking。</p>
+<p>闭源库：不公开源代码，是经过编译后的二进制文件，看不到具体实现，主要分为静态库和动态库。</p>
+<h3 id="静态库和动态库"><a href="#静态库和动态库" class="headerlink" title="静态库和动态库"></a>静态库和动态库</h3><p>1、静态库和静态库的存在形式</p>
+<p>静态库：.a和.framework</p>
+<p>动态库：.dylib(现在为.tbd)和.framework</p>
+<p>2、静态库和动态库使用时的区别</p>
+<p>静态库：链接时，静态库会被完整地复制到可执行文件中， 被多次使用就有多份冗余拷贝；</p>
+<p>动态库：链接时不复制，程序运行时由系统动态加载到内存，供程序调用，系统只加载一次，多个程序共用，节省内存。</p>
+<p><img src="http://osv8n47s0.bkt.clouddn.com/blog/1424051789719516.png" alt="静态库使用"><br><img src="http://osv8n47s0.bkt.clouddn.com/blog/1424051789127826.png" alt="动态库使用"></p>
+<p>3、.a与.framework的区别</p>
+<p>.a是纯二进制文件，.a文件不能单独使用，至少要有.h文件配合；</p>
+<p>.framework除了二进制文件外，还包含一些资源文件（头文件，plist等），由于自身包含了头文件，所以.framework可以单独使用。</p>
+<h2 id="制作framework静态库"><a href="#制作framework静态库" class="headerlink" title="制作framework静态库"></a>制作framework静态库</h2><h3 id="创建静态库工程"><a href="#创建静态库工程" class="headerlink" title="创建静态库工程"></a>创建静态库工程</h3><p>新建一个项目，选择Cocoa Touch Framework<br><img src="http://osv8n47s0.bkt.clouddn.com/select_template.png" alt="选择工程模板"><br>将静态库命名为SONGTestLib（名字随便起），并填写其他必要信息<br><img src="http://osv8n47s0.bkt.clouddn.com/Snip20170803_1.png" alt=""><br>新建完成之后，项目中会自动生成一个头文件SONGTestLib.h(工程名.h),创建其他相关代码文件并编写代码<br><img src="http://osv8n47s0.bkt.clouddn.com/add_code.png" alt=""><br>选择工程文件&gt;target&gt;Build Settings&gt;Linking&gt;Mach-O Type，设置为Static Library，因为系统默认创建的是动态库，需要设置此项才能生成静态库。<br><img src="http://osv8n47s0.bkt.clouddn.com/select_type.png" alt="选择库类型"><br>选择工程文件&gt;target&gt;Build Phases&gt;Headers,将需要公开的头文件从Project中拖入Public。<br><img src="http://osv8n47s0.bkt.clouddn.com/select_headers.png" alt="公开头文件"><br>将需要公开的.h文件都用<code>#import&lt;SONGTestLib/PublicHeader.h&gt;</code>形式引入,记住一定要将所有的需要公开的.h文件都写在给定的.h文件中,不然编译后生成的.framework在引用的时候会有警告。<br><img src="http://osv8n47s0.bkt.clouddn.com/Snip20170803_3.png" alt="引入公开的头文件"></p>
+<h3 id="添加资源文件（可选）"><a href="#添加资源文件（可选）" class="headerlink" title="添加资源文件（可选）"></a>添加资源文件（可选）</h3><p>有时候我们的静态库中也需要图片素材等外部资源，此时我们可以将这些资源文件一起打包到framework中。</p>
+<p>创建.bundle：外部资源不能直接打包到framework静态库中，必须将资源放到.bundle中。创建.bundle很简单，直接新建一个文件夹，将文件夹添加后缀.bundle即可。</p>
 <blockquote>
-<p>赠人玫瑰，手有余香。</p>
+<p>bundle是静态的，也就是说，我们包含到包中的资源文件作为一个资源包是不参加项目编译的。也就意味着，bundle包中不能包含可执行的文件。它仅仅是作为资源，被解析成为特定的2进制数据。</p>
 </blockquote>
-<p>最近抽时间搭建了真正属于自己的博客，今后我会在此分享学习心得，记录生活感受。如果能够在写作过程中帮助到一些人，或者为他们带去一些启发，我一定会非常开心。</p>
-<p>每个人都会憧憬更加美好的未来，而未来从哪里来？从此刻来。好好的把握现在，认真的活在当下，一切希望都会水到渠成，我们都会此刻柳暗花明。</p>
-<p>未来已来——未来由此刻创造，未来诞生于此刻。新世界已打开，我是此刻柳暗花明，祝你好运！</p>
+<p>将.bundle添加到静态库工程中：直接将.bundle拖入到工程中即可</p>
+<h3 id="生成通用的静态库"><a href="#生成通用的静态库" class="headerlink" title="生成通用的静态库"></a>生成通用的静态库</h3><p>此时对工程进行编译已经可以生成静态库，但按照工程默认的设置，静态库并不是支持所有的架构。因为我们的静态库是给别人用的，所以一般会支持所有的架构，模拟器和真机的各种机型都要支持，所以还需要一定的工作来生成通用的静态库。</p>
+<h5 id="Debug和Release版本"><a href="#Debug和Release版本" class="headerlink" title="Debug和Release版本"></a>Debug和Release版本</h5><ul>
+<li>一般来说, 我们应该发布的是release版本。</li>
+<li>debug:调试版本, 系统本身也会有一些调试代码. 此版本体积会稍大, 运行会稍慢。</li>
+<li>release: 发布版本, 系统会去除调试代码, 体积变小, 运行速度变快. 对用户来说没有明显的感觉。</li>
+</ul>
+<h5 id="导出Products静态库的配置"><a href="#导出Products静态库的配置" class="headerlink" title="导出Products静态库的配置"></a>导出Products静态库的配置</h5><p>在静态库工程中，如果配置中的Build Active Architecture Only设置为YES的话，导出的静态库只包含当前的架构。在默认配置中Targets&gt;Build Settings&gt;Build Active Architecture Only,Debug为YES,release为NO，我们要发布的也是release版本，所以要确保这一步没有修改。</p>
+<p>修改Scheme:<br><img src="http://osv8n47s0.bkt.clouddn.com/edit_scheme.png" alt="编辑Scheme"><br>将Build Configuration为Release<br><img src="http://osv8n47s0.bkt.clouddn.com/select_release.png" alt="修改为release"></p>
+<h4 id="分别导出模拟器和真机版本的静态库"><a href="#分别导出模拟器和真机版本的静态库" class="headerlink" title="分别导出模拟器和真机版本的静态库"></a>分别导出模拟器和真机版本的静态库</h4><p>先选择Generic iOS Device，按下Command+B：Build一下</p>
+<p>然后随意选择一个模拟器再次Build一下</p>
+<p>找到Build后的framework<br><img src="http://osv8n47s0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-08-03%20%E4%B8%8B%E5%8D%882.44.56.png" alt="找到静态库"><br>我们看到总共有两个文件夹，Release-iphoneos文件夹中是真机编译生成的文件，Release-iphonesimulator文件夹中是模拟器编译生成的文件。<br><img src="http://osv8n47s0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-08-03%20%E4%B8%8B%E5%8D%882.46.16.png" alt="两种静态库"></p>
+<h4 id="合并静态库的模拟器与真机架构"><a href="#合并静态库的模拟器与真机架构" class="headerlink" title="合并静态库的模拟器与真机架构"></a>合并静态库的模拟器与真机架构</h4><blockquote>
+<p>合并之后的动态/静态库要与原来的名称一致，不然用的时候编译会报错</p>
+<p>合并的主要是是framework下的同名文件</p>
+</blockquote>
+<p>我们将合并后的文件放到Products文件夹下,命令行为<pre><code>lipo -create /Users/songbo/Library/Developer/Xcode/DerivedData/SONGTestLib-dalamcasyjusbjcoiswoasefbbuq/Build/Products/Release-iphonesimulator/SONGTestLib.framework/SONGTestLib /Users/songbo/Library/Developer/Xcode/DerivedData/SONGTestLib-dalamcasyjusbjcoiswoasefbbuq/Build/Products/Release-iphoneos/SONGTestLib.framework/SONGTestLib -output /Users/songbo/Library/Developer/Xcode/DerivedData/SONGTestLib-dalamcasyjusbjcoiswoasefbbuq/Build/Products/SONGTestLib</code></pre></p>
+<p><img src="http://osv8n47s0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-08-03%20%E4%B8%8B%E5%8D%882.50.48.png" alt="合并架构的命令截图"><br>这里解释一下这看似很复杂的命令：lipo -create +被合成的两个原来文件的路径 + -output + 合成后文件的输出路径 ，所以上面命令执行之后会在Products文件夹下生成合成之后的文件<br><img src="http://osv8n47s0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-08-03%20%E4%B8%8B%E5%8D%882.50.17.png" alt="合成后的文件"><br>将合成之后的文件SONGTestLib替换掉之前Release-iphoneos中framework中的SONGTestLib,此时Release-iphoneos中framework即是我们合成之后可以使用的framework。</p>
+<h4 id="验证合并后的静态库架构"><a href="#验证合并后的静态库架构" class="headerlink" title="验证合并后的静态库架构"></a>验证合并后的静态库架构</h4><p>验证静态库架构的代码为lipo -info + 静态库文件路径</p>
+<p>例如验证我们上面制作的静态库架构</p>
+<p><pre><code>lipo -info /Users/songbo/Library/Developer/Xcode/DerivedData/SONGTestLib-dalamcasyjusbjcoiswoasefbbuq/Build/Products/Release-iphoneos/SONGTestLib.framework/SONGTestLib</code></pre><br><img src="http://osv8n47s0.bkt.clouddn.com/Snip20170807_1.png" alt="验证静态库架构"><br>验证显示我们制作的静态库架构包括i386 armv7 x86_64 arm64，符合我们的要求。</p>
+<p>至此，静态库制作完成。</p>
+<h2 id="使用静态库"><a href="#使用静态库" class="headerlink" title="使用静态库"></a>使用静态库</h2><h3 id="添加静态库"><a href="#添加静态库" class="headerlink" title="添加静态库"></a>添加静态库</h3><p>将上文制作好的静态库直接拖入到需要使用静态库的项目中，注意将Copy items if needed打勾，<br><img src="http://osv8n47s0.bkt.clouddn.com/Snip20170807_2.png" alt="勾选Copy items if needed"></p>
+<h3 id="使用资源文件-可选-与制作静态库时对应"><a href="#使用资源文件-可选-与制作静态库时对应" class="headerlink" title="使用资源文件(可选,与制作静态库时对应)"></a>使用资源文件(可选,与制作静态库时对应)</h3><p>如果制作静态库时，在静态库中添加了.bundle形式的资源文件，此时如果资源文件是必须用的，还必须要将资源文件添加到当前的工程项目中：</p>
+<p>方法：选中工程名，在右键菜单中选择Add Files to “工程名”…，从SONGTestLib.framework中选择mapapi.bundle文件，并勾选“Copy items if needed”复选框，单击“Add”按钮，将资源文件添加到工程中。<br><img src="http://osv8n47s0.bkt.clouddn.com/Snip20170807_3.png" alt="添加资源文件"></p>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><p>如果静态库内有 category 分类，那么需要在添加 -ObjC 编译标识，否则可能会报：unrecognized selector sent to instance。</p>
+<p>方法：选择工程文件&gt;target&gt;Build Settings&gt;Linking&gt;Other Linker Flags，设置为-ObjC<br><img src="http://osv8n47s0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-08-03%20%E4%B8%8B%E5%8D%883.00.33.png" alt="设置-ObjC"></p>
+<blockquote>
+<p>其他编译参数说明</p>
+<p>1、<code>－ObjC</code>：加了这个参数后，链接器就会把静态库中所有的Objective-C类和分类都加载到最后的可执行文件中。</p>
+<p>2、<code>－all_load</code>：会让链接器把所有找到的目标文件都加载到可执行文件中，但是千万不要随便使用这个参数！假如你使用了不止一个静态库文件，然后又使用了这个参数，那么你很有可能会遇到ld: duplicate symbol错误，因为不同的库文件里面可能会有相同的目标文件，所以建议在遇到<code>-ObjC</code>失效的情况下使用<code>-force_load</code>参数。</p>
+<p>3、<code>-force_load</code>：所做的事情跟<code>-all_load</code>其实是一样的，但是<code>-force_load</code>需要指定要进行全部加载的库文件的路径，这样的话，你就只是完全加载了一个库文件，不影响其余库文件的按需加载。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
+<li><a href="http://www.infocool.net/kb/IOS/201610/196771.html" target="_blank" rel="external">ios开发：Xcode8制作framework及使用</a></li>
+<li><a href="http://billchan.me/2016/07/31/how-to-use-static-library-in-ios/" target="_blank" rel="external">iOS 中静态链接库的使用</a></li>
+<li><a href="http://blog.csdn.net/tianshats/article/details/52045974" target="_blank" rel="external">IOS开发中制作属于自己的静态库.a、资源库.bundle、.framework</a></li>
+<li><a href="http://www.jianshu.com/p/f9befc134dbc" target="_blank" rel="external">iOS中的静态库 .a 和 .framework &amp;&amp; 资源库.bundle</a></li>
+<li><a href="https://my.oschina.net/kaqijiang/blog/649632" target="_blank" rel="external">iOS静态库 【.a 和framework】</a></li>
+</ol>
+</blockquote>
 
       
     </div>
@@ -459,7 +532,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/感悟/" rel="tag"># 感悟</a>
+            <a href="/tags/iOS-技术/" rel="tag"># iOS,技术</a>
           
         </div>
       
@@ -472,15 +545,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/07/11/未来已来-打开新世界/" rel="next" title="未来已来 - 打开新世界">
+                <i class="fa fa-chevron-left"></i> 未来已来 - 打开新世界
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/08/07/iOS中制作Framework静态库/" rel="prev" title="iOS中制作Framework静态库">
-                iOS中制作Framework静态库 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -557,8 +630,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/uploads/avatar.JPG"
@@ -638,6 +720,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基础知识"><span class="nav-number">2.</span> <span class="nav-text">基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#库"><span class="nav-number">2.1.</span> <span class="nav-text">库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#静态库和动态库"><span class="nav-number">2.2.</span> <span class="nav-text">静态库和动态库</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#制作framework静态库"><span class="nav-number">3.</span> <span class="nav-text">制作framework静态库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建静态库工程"><span class="nav-number">3.1.</span> <span class="nav-text">创建静态库工程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加资源文件（可选）"><span class="nav-number">3.2.</span> <span class="nav-text">添加资源文件（可选）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成通用的静态库"><span class="nav-number">3.3.</span> <span class="nav-text">生成通用的静态库</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Debug和Release版本"><span class="nav-number">3.3.0.1.</span> <span class="nav-text">Debug和Release版本</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#导出Products静态库的配置"><span class="nav-number">3.3.0.2.</span> <span class="nav-text">导出Products静态库的配置</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分别导出模拟器和真机版本的静态库"><span class="nav-number">3.3.1.</span> <span class="nav-text">分别导出模拟器和真机版本的静态库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#合并静态库的模拟器与真机架构"><span class="nav-number">3.3.2.</span> <span class="nav-text">合并静态库的模拟器与真机架构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#验证合并后的静态库架构"><span class="nav-number">3.3.3.</span> <span class="nav-text">验证合并后的静态库架构</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用静态库"><span class="nav-number">4.</span> <span class="nav-text">使用静态库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#添加静态库"><span class="nav-number">4.1.</span> <span class="nav-text">添加静态库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用资源文件-可选-与制作静态库时对应"><span class="nav-number">4.2.</span> <span class="nav-text">使用资源文件(可选,与制作静态库时对应)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注意事项"><span class="nav-number">4.3.</span> <span class="nav-text">注意事项</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -800,9 +898,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://yoursite.com/2017/07/11/未来已来-打开新世界/';
-          this.page.identifier = '2017/07/11/未来已来-打开新世界/';
-          this.page.title = '未来已来 - 打开新世界';
+          this.page.url = 'http://yoursite.com/2017/08/07/iOS中制作Framework静态库/';
+          this.page.identifier = '2017/08/07/iOS中制作Framework静态库/';
+          this.page.title = 'iOS中制作Framework静态库';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://此刻柳暗花明.disqus.com/embed.js';
