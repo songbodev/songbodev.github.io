@@ -120,7 +120,7 @@
 <meta property="og:image" content="http://osv8n47s0.bkt.clouddn.com/Snip20170807_2.png">
 <meta property="og:image" content="http://osv8n47s0.bkt.clouddn.com/Snip20170807_3.png">
 <meta property="og:image" content="http://osv8n47s0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-08-03%20%E4%B8%8B%E5%8D%883.00.33.png">
-<meta property="og:updated_time" content="2017-08-07T11:00:42.000Z">
+<meta property="og:updated_time" content="2017-08-07T11:06:38.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS中制作Framework静态库">
 <meta name="twitter:description" content="前言iOS开发中我们经常需要用到各种库，比如开源库AFNetworking,静态库BaiduMapAPI_Base.framework（百度地图SDK）,还有系统动态库UIKit.framework等等，今天我们来学习一下相关知识并自己制作一个framework静态库。">
@@ -474,6 +474,7 @@
 <p>1、<code>－ObjC</code>：加了这个参数后，链接器就会把静态库中所有的Objective-C类和分类都加载到最后的可执行文件中。</p>
 <p>2、<code>－all_load</code>：会让链接器把所有找到的目标文件都加载到可执行文件中，但是千万不要随便使用这个参数！假如你使用了不止一个静态库文件，然后又使用了这个参数，那么你很有可能会遇到ld: duplicate symbol错误，因为不同的库文件里面可能会有相同的目标文件，所以建议在遇到<code>-ObjC</code>失效的情况下使用<code>-force_load</code>参数。</p>
 <p>3、<code>-force_load</code>：所做的事情跟<code>-all_load</code>其实是一样的，但是<code>-force_load</code>需要指定要进行全部加载的库文件的路径，这样的话，你就只是完全加载了一个库文件，不影响其余库文件的按需加载。</p>
+</blockquote>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
 <li><a href="http://www.infocool.net/kb/IOS/201610/196771.html" target="_blank" rel="external">ios开发：Xcode8制作framework及使用</a></li>
 <li><a href="http://billchan.me/2016/07/31/how-to-use-static-library-in-ios/" target="_blank" rel="external">iOS 中静态链接库的使用</a></li>
@@ -481,7 +482,6 @@
 <li><a href="http://www.jianshu.com/p/f9befc134dbc" target="_blank" rel="external">iOS中的静态库 .a 和 .framework &amp;&amp; 资源库.bundle</a></li>
 <li><a href="https://my.oschina.net/kaqijiang/blog/649632" target="_blank" rel="external">iOS静态库 【.a 和framework】</a></li>
 </ol>
-</blockquote>
 
       
     </div>
