@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-08-11T05:20:07.000Z</updated>
+  <updated>2017-08-11T05:32:26.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,9 +20,9 @@
     <link href="http://yoursite.com/2017/08/11/iOS10%E6%8E%A8%E9%80%81%E5%92%8C%E9%80%9A%E7%9F%A5%E6%96%B0%E7%89%B9%E6%80%A7%E6%80%BB%E7%BB%93/"/>
     <id>http://yoursite.com/2017/08/11/iOS10推送和通知新特性总结/</id>
     <published>2017-08-11T05:17:29.000Z</published>
-    <updated>2017-08-11T05:20:07.000Z</updated>
+    <updated>2017-08-11T05:32:26.000Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="iOS10推送和通知新特性总结"><a href="#iOS10推送和通知新特性总结" class="headerlink" title="iOS10推送和通知新特性总结"></a>iOS10推送和通知新特性总结</h1><p><strong>前言:</strong>此文章是对iOS10推送和通知新特性的一些总结，主要内容是一些需要注意的经验或技巧，对通知中具体的API没有进行很详细的介绍，所以阅读此文章需要先对iOS10的推送有一个基础的了解。<br><a id="more"></a></p>
+    <content type="html"><![CDATA[<p><strong>前言:</strong>此文章是对iOS10推送和通知新特性的一些总结，主要内容是一些需要注意的经验或技巧，对通知中具体的API没有进行很详细的介绍，所以阅读此文章需要先对iOS10的推送有一个基础的了解。<br><a id="more"></a></p>
 <p>可以参考本文的参考链接，是两位大神对iOS10通知和推送进行的更详细的说明。</p>
 <h2 id="新framework"><a href="#新framework" class="headerlink" title="新framework"></a>新framework</h2><p>针对推送和通知,iOS10引入了两个新的framework:</p>
 <ol>
@@ -49,59 +49,47 @@
 <li>调用方法<pre><code>[[UIApplication sharedApplication] registerForRemoteNotifications];</code></pre>会触发调用下面两个方法之一<pre><code>- (void)application:(UIApplication <em>)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData </em>)deviceToken</code></pre><br><pre><code>- (void)application:(UIApplication <em>)application didFailToRegisterForRemoteNotificationsWithError:(NSError </em>)error</code></pre><br>也就是说，在真机环境下，哪怕用户还没有允许通知，或者设置了禁用推送，手机都是可以通过回调获取到deviceToken的。</li>
 <li>iOS10中申请通知权限的代码如下:<pre><code>
 UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
-center.delegate = self;
-//        [center setNotificationCategories:nil];
-[center getNotificationSettingsWithCompletionHandler:^(UNNotificationSettings * _Nonnull settings) {
-if (settings.authorizationStatus == UNAuthorizationStatusNotDetermined) {
-[center requestAuthorizationWithOptions:(UNAuthorizationOptionBadge | UNAuthorizationOptionSound | UNAuthorizationOptionAlert) completionHandler:^(BOOL granted, NSError * _Nullable error) {
-if (granted && !error) {
-NSLog(@"允许通知");
-} else {
-NSLog(@"拒绝通知");
-}
-}];
-}
-}];
-//在用户允许通知之后，在真机中会再次回调获取到deviceToken的代理方法。
-</code></pre></li>
-<li>iOS10之前，在（1）应用程序在前台时；（2）应用程序在后台，然后点击了推送进入应用程序时，两种情况下会回调方法<br><pre><code>- (void)application:(UIApplication <em>)application didReceiveRemoteNotification:(NSDictionary </em>)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler{<br>//下面简称“方法1”<br>}<br></code></pre><br>如果开启了后台推送模式,还会在第三种情况下（3）应用程序在后台时，调用此方法。</li>
+     center.delegate = self;
+     //        [center setNotificationCategories:nil];
+     [center getNotificationSettingsWithCompletionHandler:^(UNNotificationSettings * _Nonnull settings) {
+         if (settings.authorizationStatus == UNAuthorizationStatusNotDetermined) {
+             [center requestAuthorizationWithOptions:(UNAuthorizationOptionBadge | UNAuthorizationOptionSound | UNAuthorizationOptionAlert) completionHandler:^(BOOL granted, NSError * _Nullable error) {
+                 if (granted && !error) {
+                     NSLog(@"允许通知");
+                 } else {
+                     NSLog(@"拒绝通知");
+                 }
+             }];
+         }
+     }];
+     //在用户允许通知之后，在真机中会再次回调获取到deviceToken的代理方法。
+     </code></pre></li>
+<li><p>iOS10之前，在（1）应用程序在前台时；（2）应用程序在后台，然后点击了推送进入应用程序时，两种情况下会回调方法<br><pre><code>- (void)application:(UIApplication <em>)application didReceiveRemoteNotification:(NSDictionary </em>)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler{<br> //下面简称“方法1”<br>}<br></code></pre><br>如果开启了后台推送模式,还会在第三种情况下（3）应用程序在后台时，调用此方法。</p>
+<p> 从iOS10开始,新增了两个通知中心的代理方法来处理通知<br> <pre><code>- (void)userNotificationCenter:(UNUserNotificationCenter <em>)center willPresentNotification:(UNNotification </em>)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler {<br> //下面简称“方法2”<br> //此方法只有应用程序在前台时才会调用,通知展示之前调用<br> NSLog(@”应用程序在前台,即将展示推送”);<br> completionHandler(UNNotificationPresentationOptionBadge | UNNotificationPresentationOptionSound | UNNotificationPresentationOptionAlert);<br>}<br></code></pre><br><pre><code>- (void)userNotificationCenter:(UNUserNotificationCenter <em>)center didReceiveNotificationResponse:(UNNotificationResponse </em>)response withCompletionHandler:(void(^)())completionHandler {<br> //下面简称“方法3”<br> //用户对通知进行响应之后调用,各种响应都会调用此方法，可以根据参数response来判断用户的响应方式,是点击了通知，点击了按钮还是输入了内容等<br> NSLog(@”用户响应”);<br> completionHandler();<br>}<br></code></pre><br>如果实现了上述两个新增方法，当推送到达之后，调用的方法情况会发生变化，如下：</p>
+<ul>
+<li>应用程序在前台，会首先调用“方法1”,然后再调用方法2；</li>
+<li>应用程序在后台，只调用“方法1”；</li>
+<li>应用程序在后台，点击某一条推送，调用“方法3”；</li>
+<li>应用程序在前台，点击某一条推送，调用“方法3”。</li>
+</ul>
+</li>
+<li>使用了iOS10的新增方法之后，要想在推送到达之前或者应用程序在后台时执行一段代码，比如修改推送内容再提示用户，需要在项目中使用应用程序扩展Notification Service Extension来实现。</li>
+<li>如果在项目中使用了应用程序扩展Notification Service Extension，在调试的过程中，如果想要打断点调试扩展的代码，需要在Xcode中运行扩展，然后再选择项目，才可以。（后面要说的另外一个扩展Notification Content Extension也是一样的道理）</li>
+<li>iOS10的通知新特性可以让通知中包含附件,比如音频、图像或视频等内容,并且可以将其内容显示出来。使用本地通知时,可以在通知创建时,将附件加入即可。对于远程通知，则必须实现使用UNNotificationServiceExtension类通知服务扩展。</li>
+<li>如果在项目中使用了应用程序扩展Notification Content Extension,如果想要看到效果，必须在扩展的info.plist文件中设置NSExtension-&gt;NSExtensionAttributes-&gt;UNNotificationExtensionCategory字段的内容，可以是字符串或者字符串数组，字符串代表的是categoryIdentifier，必须和通知内容中的categoryIdentifier保持一致才会有效果。</li>
+<li>如果使用本地推送，触发器为位置信息时，一般使用CLRegion的子类CLCircularRegion类来定义位置信息。</li>
+<li>附件类UNNotificationAttachment定义的options属性中的UNNotificationAttachmentOptionsThumbnailClippingRectKey,代表的是缩略图显示的图片范围。（这个键所对应的值是包含一个归一化的CGRect - 也就是说，一个单元的矩形，其值是在以1.0〜 0.0 ，表示要显示的原始图像的所述部分的字典。例如，原点为（0.25 ， 0.25）和大小为（0.5 ，0.5 ）定义了剪辑矩形，只显示图像的中心部分。使用CGRectCreateDictionaryRepresentation函数来创建字典的矩形。）</li>
+<li>附件的路径并不一定需要时https的，只要打开Allow Arbitrary Loads后就可以使用http。</li>
+<li><p>假如前面在Service Extension下载好了图片或者是视频，在自定义UI部分想要获取，就可以通过UNNotificationAttachment * attachment = notification.request.content.attachments.firstObject;查找附件来获取数据。但是必须注意，形成附件后，文件的实际存储被移到了pushStore的一个系统级别的缓存文件夹，此时需要调用NSURL在iOS8开始提供的两个方法来获取权限，提取数据。</p>
+<blockquote>
+<p><code>startAccessingSecurityScopedResource</code><br><code>stopAccessingSecurityScopedResource</code></p>
+</blockquote>
+</li>
 </ol>
-<p>从iOS10开始,新增了两个通知中心的代理方法来处理通知</p>
-<pre><code>- (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler {
-//下面简称“方法2”
-//此方法只有应用程序在前台时才会调用,通知展示之前调用
-NSLog(@"应用程序在前台,即将展示推送");
-completionHandler(UNNotificationPresentationOptionBadge | UNNotificationPresentationOptionSound | UNNotificationPresentationOptionAlert);
-}
-</code></pre>
-<pre><code>- (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void(^)())completionHandler {
-//下面简称“方法3”
-//用户对通知进行响应之后调用,各种响应都会调用此方法，可以根据参数response来判断用户的响应方式,是点击了通知，点击了按钮还是输入了内容等
-NSLog(@"用户响应");
-completionHandler();
-}
-</code></pre>
-如果实现了上述两个新增方法，当推送到达之后，调用的方法情况会发生变化，如下：
-* 应用程序在前台，会首先调用“方法1”,然后再调用方法2；
-* 应用程序在后台，只调用“方法1”；
-* 应用程序在后台，点击某一条推送，调用“方法3”；
-* 应用程序在前台，点击某一条推送，调用“方法3”。
-4. 使用了iOS10的新增方法之后，要想在推送到达之前或者应用程序在后台时执行一段代码，比如修改推送内容再提示用户，需要在项目中使用应用程序扩展Notification Service Extension来实现。
-5. 如果在项目中使用了应用程序扩展Notification Service Extension，在调试的过程中，如果想要打断点调试扩展的代码，需要在Xcode中运行扩展，然后再选择项目，才可以。（后面要说的另外一个扩展Notification Content Extension也是一样的道理）
-6. iOS10的通知新特性可以让通知中包含附件,比如音频、图像或视频等内容,并且可以将其内容显示出来。使用本地通知时,可以在通知创建时,将附件加入即可。对于远程通知，则必须实现使用UNNotificationServiceExtension类通知服务扩展。
-7. 如果在项目中使用了应用程序扩展Notification Content Extension,如果想要看到效果，必须在扩展的info.plist文件中设置NSExtension->NSExtensionAttributes->UNNotificationExtensionCategory字段的内容，可以是字符串或者字符串数组，字符串代表的是categoryIdentifier，必须和通知内容中的categoryIdentifier保持一致才会有效果。
-8. 如果使用本地推送，触发器为位置信息时，一般使用CLRegion的子类CLCircularRegion类来定义位置信息。
-9. 附件类UNNotificationAttachment定义的options属性中的UNNotificationAttachmentOptionsThumbnailClippingRectKey,代表的是缩略图显示的图片范围。（这个键所对应的值是包含一个归一化的CGRect - 也就是说，一个单元的矩形，其值是在以1.0〜 0.0 ，表示要显示的原始图像的所述部分的字典。例如，原点为（0.25 ， 0.25）和大小为（0.5 ，0.5 ）定义了剪辑矩形，只显示图像的中心部分。使用CGRectCreateDictionaryRepresentation函数来创建字典的矩形。）
-10. 附件的路径并不一定需要时https的，只要打开Allow Arbitrary Loads后就可以使用http。
-11. 假如前面在Service Extension下载好了图片或者是视频，在自定义UI部分想要获取，就可以通过UNNotificationAttachment * attachment = notification.request.content.attachments.firstObject;查找附件来获取数据。但是必须注意，形成附件后，文件的实际存储被移到了pushStore的一个系统级别的缓存文件夹，此时需要调用NSURL在iOS8开始提供的两个方法来获取权限，提取数据。
-
->`startAccessingSecurityScopedResource`
->`stopAccessingSecurityScopedResource `
-
 <pre><code>[attachment.URL startAccessingSecurityScopedResource];
-NSData * data = [NSData dataWithContentsOfFile:attachment.URL.path];
-[attachment.URL stopAccessingSecurityScopedResource];
-self.imageView.image = [UIImage imageWithData:data];
+        NSData * data = [NSData dataWithContentsOfFile:attachment.URL.path];
+        [attachment.URL stopAccessingSecurityScopedResource];
+        self.imageView.image = [UIImage imageWithData:data];
 </code></pre>
 
 <h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ol>
@@ -112,7 +100,7 @@ self.imageView.image = [UIImage imageWithData:data];
     
     <summary type="html">
     
-      &lt;h1 id=&quot;iOS10推送和通知新特性总结&quot;&gt;&lt;a href=&quot;#iOS10推送和通知新特性总结&quot; class=&quot;headerlink&quot; title=&quot;iOS10推送和通知新特性总结&quot;&gt;&lt;/a&gt;iOS10推送和通知新特性总结&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;前言:&lt;/strong&gt;此文章是对iOS10推送和通知新特性的一些总结，主要内容是一些需要注意的经验或技巧，对通知中具体的API没有进行很详细的介绍，所以阅读此文章需要先对iOS10的推送有一个基础的了解。&lt;br&gt;
+      &lt;p&gt;&lt;strong&gt;前言:&lt;/strong&gt;此文章是对iOS10推送和通知新特性的一些总结，主要内容是一些需要注意的经验或技巧，对通知中具体的API没有进行很详细的介绍，所以阅读此文章需要先对iOS10的推送有一个基础的了解。&lt;br&gt;
     
     </summary>
     
