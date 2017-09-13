@@ -114,7 +114,7 @@ UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotification
     <link href="http://yoursite.com/2017/08/07/iOS%E4%B8%AD%E5%88%B6%E4%BD%9CFramework%E9%9D%99%E6%80%81%E5%BA%93/"/>
     <id>http://yoursite.com/2017/08/07/iOS中制作Framework静态库/</id>
     <published>2017-08-07T10:47:18.000Z</published>
-    <updated>2017-08-07T11:06:38.000Z</updated>
+    <updated>2017-09-13T08:53:44.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>iOS开发中我们经常需要用到各种库，比如开源库AFNetworking,静态库BaiduMapAPI_Base.framework（百度地图SDK）,还有系统动态库UIKit.framework等等，今天我们来学习一下相关知识并自己制作一个framework静态库。<br><a id="more"></a></p>
 <h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><h3 id="库"><a href="#库" class="headerlink" title="库"></a>库</h3><p>什么是库？</p>
@@ -131,13 +131,47 @@ UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotification
 <p>3、.a与.framework的区别</p>
 <p>.a是纯二进制文件，.a文件不能单独使用，至少要有.h文件配合；</p>
 <p>.framework除了二进制文件外，还包含一些资源文件（头文件，plist等），由于自身包含了头文件，所以.framework可以单独使用。</p>
-<h2 id="制作framework静态库"><a href="#制作framework静态库" class="headerlink" title="制作framework静态库"></a>制作framework静态库</h2><h3 id="创建静态库工程"><a href="#创建静态库工程" class="headerlink" title="创建静态库工程"></a>创建静态库工程</h3><p>新建一个项目，选择Cocoa Touch Framework<br><img src="http://osv8n47s0.bkt.clouddn.com/select_template.png" alt="选择工程模板"><br>将静态库命名为SONGTestLib（名字随便起），并填写其他必要信息<br><img src="http://osv8n47s0.bkt.clouddn.com/Snip20170803_1.png" alt=""><br>新建完成之后，项目中会自动生成一个头文件SONGTestLib.h(工程名.h),创建其他相关代码文件并编写代码<br><img src="http://osv8n47s0.bkt.clouddn.com/add_code.png" alt=""><br>选择工程文件&gt;target&gt;Build Settings&gt;Linking&gt;Mach-O Type，设置为Static Library，因为系统默认创建的是动态库，需要设置此项才能生成静态库。<br><img src="http://osv8n47s0.bkt.clouddn.com/select_type.png" alt="选择库类型"><br>选择工程文件&gt;target&gt;Build Phases&gt;Headers,将需要公开的头文件从Project中拖入Public。<br><img src="http://osv8n47s0.bkt.clouddn.com/select_headers.png" alt="公开头文件"><br>将需要公开的.h文件都用<code>#import&lt;SONGTestLib/PublicHeader.h&gt;</code>形式引入,记住一定要将所有的需要公开的.h文件都写在给定的.h文件中,不然编译后生成的.framework在引用的时候会有警告。<br><img src="http://osv8n47s0.bkt.clouddn.com/Snip20170803_3.png" alt="引入公开的头文件"></p>
-<h3 id="添加资源文件（可选）"><a href="#添加资源文件（可选）" class="headerlink" title="添加资源文件（可选）"></a>添加资源文件（可选）</h3><p>有时候我们的静态库中也需要图片素材等外部资源，此时我们可以将这些资源文件一起打包到framework中。</p>
-<p>创建.bundle：外部资源不能直接打包到framework静态库中，必须将资源放到.bundle中。创建.bundle很简单，直接新建一个文件夹，将文件夹添加后缀.bundle即可。</p>
+<h2 id="制作framework静态库"><a href="#制作framework静态库" class="headerlink" title="制作framework静态库"></a>制作framework静态库</h2><h3 id="创建静态库工程"><a href="#创建静态库工程" class="headerlink" title="创建静态库工程"></a>创建静态库工程</h3><p>新建一个项目，选择Cocoa Touch Framework<br><img src="http://osv8n47s0.bkt.clouddn.com/select_template.png" alt="选择工程模板"><br>将静态库命名为SONGTestLib（名字随便起），并填写其他必要信息<br><img src="http://osv8n47s0.bkt.clouddn.com/Snip20170803_1.png" alt=""><br>新建完成之后，在PROJECT&gt;Info&gt;Deployment Target&gt;iOS Deployment Target选择你需要支持的最低系统版本，同样的操作在TARGETS中，General&gt;Deployment Info&gt;Deployment Target，选择需要支持的最低系统版本。<br><img src="http://osv8n47s0.bkt.clouddn.com/Snip20170912_2.png" alt=""><br><img src="http://osv8n47s0.bkt.clouddn.com/Snip20170912_1.png" alt=""></p>
+<p>项目初始生成时会自动生成一个头文件SONGTestLib.h(工程名.h),创建其他相关代码文件并编写代码<br><img src="http://osv8n47s0.bkt.clouddn.com/add_code.png" alt=""><br>选择工程文件&gt;target&gt;Build Settings&gt;Linking&gt;Mach-O Type，设置为Static Library，因为系统默认创建的是动态库，需要设置此项才能生成静态库。<br><img src="http://osv8n47s0.bkt.clouddn.com/select_type.png" alt="选择库类型"><br>选择工程文件&gt;target&gt;Build Phases&gt;Headers,将需要公开的头文件从Project中拖入Public。<br><img src="http://osv8n47s0.bkt.clouddn.com/select_headers.png" alt="公开头文件"><br>将需要公开的.h文件都用<code>#import&lt;SONGTestLib/PublicHeader.h&gt;</code>形式引入,记住一定要将所有的需要公开的.h文件都写在给定的.h文件中,不然编译后生成的.framework在引用的时候会有警告。<br><img src="http://osv8n47s0.bkt.clouddn.com/Snip20170803_3.png" alt="引入公开的头文件"></p>
+<h3 id="添加资源文件（可选）"><a href="#添加资源文件（可选）" class="headerlink" title="添加资源文件（可选）"></a>添加资源文件（可选）</h3><p>有时候我们的静态库中也需要图片素材、媒体文件、xib、storyboard等外部资源，此时我们可以通过bundle将这些资源文件一起打包到framework中。</p>
 <blockquote>
+<p><strong>外部资源不能直接打包到framework静态库中，必须将资源放到.bundle中。</strong></p>
 <p>bundle是静态的，也就是说，我们包含到包中的资源文件作为一个资源包是不参加项目编译的。也就意味着，bundle包中不能包含可执行的文件。它仅仅是作为资源，被解析成为特定的2进制数据。</p>
 </blockquote>
-<p>将.bundle添加到静态库工程中：直接将.bundle拖入到工程中即可</p>
+<h5 id="创建-bundle"><a href="#创建-bundle" class="headerlink" title="创建.bundle"></a>创建.bundle</h5><p><strong>方法一:</strong>第一种创建.bundle的方法很简单，直接新建一个文件夹，将文件夹添加后缀.bundle即可。</p>
+<blockquote>
+<p>如果需要的外部资源中只包含图片素材或媒体文件,可以优先选择这种方式,当然也可以选择下面的方法二。</p>
+</blockquote>
+<p><strong>方法二:</strong>通过创建工程的方式创建.bundle。</p>
+<ol>
+<li>新建一个项目,选择macOS&gt;Framework &amp; Library&gt;Bundle</li>
+<li>给项目命名,并填写其他必要信息</li>
+<li>在TARGETS&gt;Build Settings&gt;Deployment&gt;iOS Deployment Target&gt;选择自己需要支持的最低系统版本</li>
+<li>Build后会生成一个bundle包，但在包中的图片由以前的png格式全部变成tiff格式。为了防止这种格式转变,需要在Build Settings&gt;Architectures&gt;Base SDK&gt;选择iOS的SDK要支持的版本。这时TARGETS中Build Settings&gt;User-Defined中会出现一个新的Key：<code>COMBINE_HIDPI_IMAGES</code>,把它设置为NO。</li>
+<li>将需要的资源,如图片、storyboard、xib等文件添加到工程中。storyboard和xib文件可以直接从其他项目中拖过来，也可以在当前Bundle工程中创建;至于连线,不必拘泥于必须在同一个工程中的文件,即一个工程中的xib可以与另一个工程中的文件连线,只要类名相同即可。</li>
+<li>上面所有的步骤完成之后,command+B编译项目,即可在Products中找到生成的bundle。<br><img src="http://osv8n47s0.bkt.clouddn.com/Snip20170913_1.png" alt="Show in Finder"></li>
+</ol>
+<h5 id="使用-bundle"><a href="#使用-bundle" class="headerlink" title="使用.bundle"></a>使用.bundle</h5><p>将.bundle添加到静态库工程中：直接将.bundle拖入到工程中即可。</p>
+<blockquote>
+<p>注:如果.bundle中包含编译之后的xib、storyboard等文件,在framework中包含xib对应的类,在使用时可能会遇到类似<code>Unknown class NewCell in Interface Builder file.</code>或者<pre><code>[<uitableviewcell 0x7fd23c03b600=""> setValue:forUndefinedKey:]: this class is not key value coding-compliant for the key myImageView.</uitableviewcell></code></pre>的报错,这是因为xib等文件中的使用的类名没有被链接到项目中。这里列举两种解决方法:</p>
+<ol>
+<li>在任意一个代码文件中调用一下报错的类,例如[MyClass class];即可。</li>
+<li>选择工程文件&gt;target&gt;Build Settings&gt;Linking&gt;Other Linker Flags，设置为-ObjC。</li>
+</ol>
+</blockquote>
+<p><strong>获取bundle中的资源</strong></p>
+<ol>
+<li>获取bundle路径<pre><code>NSString *bundlePath = [NSBundle mainBundle] pathForResource:@"NibBundle" ofType:@"bundle"]</code></pre></li>
+<li>获取bundle<pre><code>NSBundle *myBundle = [NSBundle bundleWithPath:bundlePath]</code></pre></li>
+<li>加载bundle中的某个nib<pre><code>[UINib nibWithNibName:@"NibCell" bundle:myBundle]</code></pre>
+或者
+<pre><code>[[myBundle loadNibNamed:@"NibCell" owner:self options:nil] lastObject];</code></pre></li>
+<li>获取bundle中的图片<pre><code>UIImage *image = [UIImage imageNamed:[@"YourBundleName.bundle" stringByAppendingPathComponent:@"yourImageName.png"]];</code></pre>
+或者
+<pre><code>UIImage *image = [UIImage imageWithContentsOfFile:[bundlePath stringByAppendingPathComponent:@"yourImageName.png"]];</code></pre>
+
+</li>
+</ol>
 <h3 id="生成通用的静态库"><a href="#生成通用的静态库" class="headerlink" title="生成通用的静态库"></a>生成通用的静态库</h3><p>此时对工程进行编译已经可以生成静态库，但按照工程默认的设置，静态库并不是支持所有的架构。因为我们的静态库是给别人用的，所以一般会支持所有的架构，模拟器和真机的各种机型都要支持，所以还需要一定的工作来生成通用的静态库。</p>
 <h5 id="Debug和Release版本"><a href="#Debug和Release版本" class="headerlink" title="Debug和Release版本"></a>Debug和Release版本</h5><ul>
 <li>一般来说, 我们应该发布的是release版本。</li>
@@ -176,6 +210,8 @@ UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotification
 <li><a href="http://blog.csdn.net/tianshats/article/details/52045974" target="_blank" rel="external">IOS开发中制作属于自己的静态库.a、资源库.bundle、.framework</a></li>
 <li><a href="http://www.jianshu.com/p/f9befc134dbc" target="_blank" rel="external">iOS中的静态库 .a 和 .framework &amp;&amp; 资源库.bundle</a></li>
 <li><a href="https://my.oschina.net/kaqijiang/blog/649632" target="_blank" rel="external">iOS静态库 【.a 和framework】</a></li>
+<li><a href="http://www.jianshu.com/p/038dab7accbc" target="_blank" rel="external">xcode7制作framework,结合xib,storyboard,资源文件等</a></li>
+<li><a href="https://stackoverflow.com/questions/1725881/unknown-class-myclass-in-interface-builder-file-error-at-runtime" target="_blank" rel="external">“Unknown class <myclass> in Interface Builder file” error at runtime</myclass></a></li>
 </ol>
 ]]></content>
     
