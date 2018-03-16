@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-03-16T11:48:54.912Z</updated>
+  <updated>2018-03-16T11:55:57.058Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,23 +20,20 @@
     <link href="http://yoursite.com/2018/03/16/iOS%E7%9F%A5%E8%AF%86%E4%B8%93%E9%A2%98%E4%B9%8BAR%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6Vuforia%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     <id>http://yoursite.com/2018/03/16/iOS知识专题之AR开发框架Vuforia学习笔记/</id>
     <published>2018-03-16T04:23:59.000Z</published>
-    <updated>2018-03-16T11:48:54.912Z</updated>
+    <updated>2018-03-16T11:55:57.058Z</updated>
     
-    <content type="html"><![CDATA[<p>##前言</p>
-<p><a href="https://developer.vuforia.com" target="_blank" rel="external">Vuforia</a>是一个知名的AR开发框架，同时支持iOS和Android开发平台。</p>
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><a href="https://developer.vuforia.com" target="_blank" rel="external">Vuforia</a>是一个知名的AR开发框架，同时支持iOS和Android开发平台。</p>
 <p>众所周知，苹果在iOS11推出了自己的AR开发框架ARKit，但是仍有较大的局限性，比如在硬件上只支持iPhone6s及以后的设备，包括iPhoneSE，主要是需要A9以上的芯片支持；而Android端目前还没有官方统一的AR支持框架。所以在需要进行移动端的AR开发时，Vuforia框架是一个不错的选择。</p>
 <p>本文其实是自己研究Vuforia框架的学习笔记，仅供参考，如有错误请批评指正。</p>
 <a id="more"></a>
-<p>##几个比较重要的类</p>
-<p>Vuforia官方提供了三种类型的API:Unity,C++和Java。三种类型API的内容都是一一对应的，所以只需要选择适合自己的一种API进行学习使用即可。</p>
-<p>###Vuforia::State<br>State中保存了当前AR环境中的摄像机帧和所有的trackables可跟踪对象。和Frame类似，State是个轻量级的对象，它的数据实际上保存在多个（其他类的）实例中。从State中查询的Trackables不能和从tracker中查询的Trackables指针比较，即使它们可能引用的是同一个对象。从state中查询的Trackables代表AR状态中临时的，不可变的view,因此不能修改。要想修改它们，必须从Tracker中查询它们。</p>
+<h2 id="几个比较重要的类"><a href="#几个比较重要的类" class="headerlink" title="几个比较重要的类"></a>几个比较重要的类</h2><p>Vuforia官方提供了三种类型的API:Unity,C++和Java。三种类型API的内容都是一一对应的，所以只需要选择适合自己的一种API进行学习使用即可。</p>
+<h3 id="Vuforia-State"><a href="#Vuforia-State" class="headerlink" title="Vuforia::State"></a>Vuforia::State</h3><p>State中保存了当前AR环境中的摄像机帧和所有的trackables可跟踪对象。和Frame类似，State是个轻量级的对象，它的数据实际上保存在多个（其他类的）实例中。从State中查询的Trackables不能和从tracker中查询的Trackables指针比较，即使它们可能引用的是同一个对象。从state中查询的Trackables代表AR状态中临时的，不可变的view,因此不能修改。要想修改它们，必须从Tracker中查询它们。</p>
 <p>在State中可能会包含有多个TrackableResult，因此可以从State中可以获取当前的某个TrackableResult对象。</p>
-<p>###Vuforia::TrackableResult<br>顾名思义，TrackableResult其实就是一个“跟踪的结果”，代表的是一个Trackable 在某一帧中的状态。</p>
+<h3 id="Vuforia-TrackableResult"><a href="#Vuforia-TrackableResult" class="headerlink" title="Vuforia::TrackableResult"></a>Vuforia::TrackableResult</h3><p>顾名思义，TrackableResult其实就是一个“跟踪的结果”，代表的是一个Trackable 在某一帧中的状态。</p>
 <p>我们可以通过其实例方法获取到当前结果的各种参数，包括Pose(当前的姿势或位置矩阵)和Trackable （可跟踪的对象）。</p>
-<p>###Vuforia::Trackable<br>Trackable是所有可被跟踪对象的基类。子类主要包括，锚点类，可跟踪的设备，模型，以及单词word等。</p>
+<h3 id="Vuforia-Trackable"><a href="#Vuforia-Trackable" class="headerlink" title="Vuforia::Trackable"></a>Vuforia::Trackable</h3><p>Trackable是所有可被跟踪对象的基类。子类主要包括，锚点类，可跟踪的设备，模型，以及单词word等。</p>
 <p>使用它的实例方法我们可以获取到当前被跟踪对象的名称，类型，是否extended tracking可扩展跟踪等信息。</p>
-<p>##参考链接</p>
-<ol>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ol>
 <li><a href="https://developer.vuforia.com" target="_blank" rel="external">Vuforia官方网站</a></li>
 <li><a href="https://library.vuforia.com/content/vuforia-library/en/reference/cpp/index.html" target="_blank" rel="external">Vuforia框架C++ API索引</a></li>
 </ol>
@@ -44,8 +41,7 @@
     
     <summary type="html">
     
-      &lt;p&gt;##前言&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://developer.vuforia.com&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Vuforia&lt;/a&gt;是一个知名的AR开发框架，同时支持iOS和Android开发平台。&lt;/p&gt;
+      &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://developer.vuforia.com&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Vuforia&lt;/a&gt;是一个知名的AR开发框架，同时支持iOS和Android开发平台。&lt;/p&gt;
 &lt;p&gt;众所周知，苹果在iOS11推出了自己的AR开发框架ARKit，但是仍有较大的局限性，比如在硬件上只支持iPhone6s及以后的设备，包括iPhoneSE，主要是需要A9以上的芯片支持；而Android端目前还没有官方统一的AR支持框架。所以在需要进行移动端的AR开发时，Vuforia框架是一个不错的选择。&lt;/p&gt;
 &lt;p&gt;本文其实是自己研究Vuforia框架的学习笔记，仅供参考，如有错误请批评指正。&lt;/p&gt;
     
@@ -61,10 +57,9 @@
     <link href="http://yoursite.com/2018/03/12/iOS%E7%9F%A5%E8%AF%86%E4%B8%93%E9%A2%98%E4%B9%8BGCD%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80/"/>
     <id>http://yoursite.com/2018/03/12/iOS知识专题之GCD学习笔记一/</id>
     <published>2018-03-12T01:20:08.000Z</published>
-    <updated>2018-03-16T11:46:02.349Z</updated>
+    <updated>2018-03-16T11:55:37.060Z</updated>
     
-    <content type="html"><![CDATA[<p>##前言</p>
-<p>GCD是iOS和Mac OS X开发中处理并发的一个重要的底层技术，并且代码是开源的(<a href="https://opensource.apple.com/source/libdispatch/" target="_blank" rel="external">代码地址</a>)。它具有以下优点:</p>
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>GCD是iOS和Mac OS X开发中处理并发的一个重要的底层技术，并且代码是开源的(<a href="https://opensource.apple.com/source/libdispatch/" target="_blank" rel="external">代码地址</a>)。它具有以下优点:</p>
 <ul>
 <li>GCD 能通过推迟昂贵计算任务并在后台运行它们来改善你的应用的响应性能;</li>
 <li>GCD 提供一个易于使用的并发模型而不仅仅只是锁和线程，以帮助我们避开并发陷阱;</li>
@@ -72,35 +67,26 @@
 </ul>
 <p>GCD与线程和并发紧密相关，而相关的概念又比较多，容易混淆。本文是笔者学习GCD的笔记，只是为了便于加深记忆和以后查询，本文中的绝大部分内容都来自于<a href="https://github.com/nixzhu/dev-blog/blob/master/2014-04-19-grand-central-dispatch-in-depth-part-1.md" target="_blank" rel="external">这篇博客</a>,又加入了自己的一些总结，感谢大神的贡献。</p>
 <a id="more"></a>
-<p>##相关概念</p>
-<p>####Serial vs. Concurrent 串行 vs. 并发</p>
-<p>这些术语描述当任务相对于其它任务被执行，任务串行执行就是每次只有一个任务被执行，任务并发执行就是在同一时间可以有多个任务被执行。</p>
-<p>####Synchronous vs. Asynchronous 同步 vs. 异步</p>
-<p>在 GCD 中，这些术语描述当一个函数相对于另一个任务完成，此任务是该函数要求 GCD 执行的。</p>
+<h2 id="相关概念"><a href="#相关概念" class="headerlink" title="相关概念"></a>相关概念</h2><h4 id="Serial-vs-Concurrent-串行-vs-并发"><a href="#Serial-vs-Concurrent-串行-vs-并发" class="headerlink" title="Serial vs. Concurrent 串行 vs. 并发"></a>Serial vs. Concurrent 串行 vs. 并发</h4><p>这些术语描述当任务相对于其它任务被执行，任务串行执行就是每次只有一个任务被执行，任务并发执行就是在同一时间可以有多个任务被执行。</p>
+<h4 id="Synchronous-vs-Asynchronous-同步-vs-异步"><a href="#Synchronous-vs-Asynchronous-同步-vs-异步" class="headerlink" title="Synchronous vs. Asynchronous 同步 vs. 异步"></a>Synchronous vs. Asynchronous 同步 vs. 异步</h4><p>在 GCD 中，这些术语描述当一个函数相对于另一个任务完成，此任务是该函数要求 GCD 执行的。</p>
 <p>一个<em>同步</em>函数只在完成了它预定的任务后才返回;</p>
 <p>一个<em>异步</em>函数，刚好相反，会立即返回，预定的任务会完成但不会等它完成。因此，一个异步函数不会阻塞当前线程去执行下一个函数。</p>
-<p>####Critical Section 临界区</p>
-<p>就是一段代码不能被并发执行，也就是，两个线程不能同时执行这段代码。这很常见，因为代码去操作一个共享资源，例如一个变量若能被并发进程访问，那么它很可能会变质（它的值不再可信）。</p>
+<h4 id="Critical-Section-临界区"><a href="#Critical-Section-临界区" class="headerlink" title="Critical Section 临界区"></a>Critical Section 临界区</h4><p>就是一段代码不能被并发执行，也就是，两个线程不能同时执行这段代码。这很常见，因为代码去操作一个共享资源，例如一个变量若能被并发进程访问，那么它很可能会变质（它的值不再可信）。</p>
 <blockquote>
 <p>临界区通俗的说，其实就是这个“区域”不能在不同线程同时去访问。</p>
 </blockquote>
-<p>####Race Condition 竞态条件</p>
-<p>这种状况是指基于特定序列或时机的事件的软件系统以不受控制的方式运行的行为，例如程序的并发任务执行的确切顺序。竞态条件可导致无法预测的行为，而不能通过代码检查立即发现。</p>
+<h4 id="Race-Condition-竞态条件"><a href="#Race-Condition-竞态条件" class="headerlink" title="Race Condition 竞态条件"></a>Race Condition 竞态条件</h4><p>这种状况是指基于特定序列或时机的事件的软件系统以不受控制的方式运行的行为，例如程序的并发任务执行的确切顺序。竞态条件可导致无法预测的行为，而不能通过代码检查立即发现。</p>
 <blockquote>
 <p>在并发任务中，写在前面的任务并不一定先执行结束，如果想当然的任务先写的代码就会先结束，就可能会导致竞态条件。</p>
 </blockquote>
-<p>####Deadlock 死锁</p>
-<p>两个（有时更多）东西——在大多数情况下，是线程——所谓的死锁是指它们都卡住了，并等待对方完成或执行其它操作。第一个不能完成是因为它在等待第二个的完成。但第二个也不能完成，因为它在等待第一个的完成。</p>
+<h4 id="Deadlock-死锁"><a href="#Deadlock-死锁" class="headerlink" title="Deadlock 死锁"></a>Deadlock 死锁</h4><p>两个（有时更多）东西——在大多数情况下，是线程——所谓的死锁是指它们都卡住了，并等待对方完成或执行其它操作。第一个不能完成是因为它在等待第二个的完成。但第二个也不能完成，因为它在等待第一个的完成。</p>
 <blockquote>
 <p>两个线程都卡住了,因为它们都在等待对方的完成。</p>
 </blockquote>
-<p>####Thread Safe 线程安全</p>
-<p>线程安全的代码能在多线程或并发任务中被安全的调用，而不会导致任何问题（数据损坏，崩溃，等）。线程不安全的代码在某个时刻只能在一个上下文中运行。</p>
+<h4 id="Thread-Safe-线程安全"><a href="#Thread-Safe-线程安全" class="headerlink" title="Thread Safe 线程安全"></a>Thread Safe 线程安全</h4><p>线程安全的代码能在多线程或并发任务中被安全的调用，而不会导致任何问题（数据损坏，崩溃，等）。线程不安全的代码在某个时刻只能在一个上下文中运行。</p>
 <p>一个线程安全代码的例子是 NSDictionary 。你可以在同一时间在多个线程中使用它而不会有问题。另一方面，NSMutableDictionary 就不是线程安全的，应该保证一次只能有一个线程访问它。</p>
-<p>####Context Switch 上下文切换</p>
-<p>一个上下文切换指当你在单个进程里切换执行不同的线程时存储与恢复执行状态的过程。这个过程在编写多任务应用时很普遍，但会带来一些额外的开销。</p>
-<p>####Concurrency vs Parallelism 并发与并行</p>
-<p>我们知道,并发代码的不同部分可以“同步”执行(即可以同时的执行)。然而，该怎样发生或是否发生都取决于系统。多核设备通过并行来同时执行多个线程；然而，为了使单核设备也能实现这一点，它们必须先运行一个线程，执行一个上下文切换，然后运行另一个线程或进程。这通常发生地足够快以致给我们并发执行地错觉，如下图所示：</p>
+<h4 id="Context-Switch-上下文切换"><a href="#Context-Switch-上下文切换" class="headerlink" title="Context Switch 上下文切换"></a>Context Switch 上下文切换</h4><p>一个上下文切换指当你在单个进程里切换执行不同的线程时存储与恢复执行状态的过程。这个过程在编写多任务应用时很普遍，但会带来一些额外的开销。</p>
+<h4 id="Concurrency-vs-Parallelism-并发与并行"><a href="#Concurrency-vs-Parallelism-并发与并行" class="headerlink" title="Concurrency vs Parallelism 并发与并行"></a>Concurrency vs Parallelism 并发与并行</h4><p>我们知道,并发代码的不同部分可以“同步”执行(即可以同时的执行)。然而，该怎样发生或是否发生都取决于系统。多核设备通过并行来同时执行多个线程；然而，为了使单核设备也能实现这一点，它们必须先运行一个线程，执行一个上下文切换，然后运行另一个线程或进程。这通常发生地足够快以致给我们并发执行地错觉，如下图所示：</p>
 <p><img src="http://osv8n47s0.bkt.clouddn.com/%E5%B9%B6%E5%8F%91%E4%B8%8E%E5%B9%B6%E8%A1%8C.png" alt="并发与并行"></p>
 <blockquote>
 <p>上图中,上面的是真正的并行,而下面是并发,但是并未真正的并行，只是我们有一种“并行的错觉”。</p>
@@ -110,8 +96,7 @@
 <blockquote>
 <p>通俗的可以理解为,并发是我们写的代码，让两个任务同时执行，而是否真的并行是由系统决定的。</p>
 </blockquote>
-<p>####Queues 队列</p>
-<p>GCD 提供有 dispatch queues 来处理代码块，这些队列管理你提供给 GCD 的任务并用 <code>FIFO (先进先出)</code>顺序执行这些任务。这就保证了第一个被添加到队列里的任务会是队列中第一个开始的任务，而第二个被添加的任务将第二个开始，如此直到队列的终点。</p>
+<h4 id="Queues-队列"><a href="#Queues-队列" class="headerlink" title="Queues 队列"></a>Queues 队列</h4><p>GCD 提供有 dispatch queues 来处理代码块，这些队列管理你提供给 GCD 的任务并用 <code>FIFO (先进先出)</code>顺序执行这些任务。这就保证了第一个被添加到队列里的任务会是队列中第一个开始的任务，而第二个被添加的任务将第二个开始，如此直到队列的终点。</p>
 <p>所有的调度队列（dispatch queues）自身都是线程安全的，你能从多个线程并行的访问它们。</p>
 <p>当你了解了调度队列如何为你自己代码的不同部分提供线程安全后，GCD的优点就是显而易见的。关于这一点的关键是选择正确<strong>类型</strong>的调度队列和正确的<strong>调度函数</strong>来提交你的工作。</p>
 <blockquote>
@@ -142,8 +127,7 @@
     
     <summary type="html">
     
-      &lt;p&gt;##前言&lt;/p&gt;
-&lt;p&gt;GCD是iOS和Mac OS X开发中处理并发的一个重要的底层技术，并且代码是开源的(&lt;a href=&quot;https://opensource.apple.com/source/libdispatch/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;代码地址&lt;/a&gt;)。它具有以下优点:&lt;/p&gt;
+      &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;GCD是iOS和Mac OS X开发中处理并发的一个重要的底层技术，并且代码是开源的(&lt;a href=&quot;https://opensource.apple.com/source/libdispatch/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;代码地址&lt;/a&gt;)。它具有以下优点:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;GCD 能通过推迟昂贵计算任务并在后台运行它们来改善你的应用的响应性能;&lt;/li&gt;
 &lt;li&gt;GCD 提供一个易于使用的并发模型而不仅仅只是锁和线程，以帮助我们避开并发陷阱;&lt;/li&gt;

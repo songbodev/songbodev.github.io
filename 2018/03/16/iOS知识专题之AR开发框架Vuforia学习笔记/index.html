@@ -95,17 +95,17 @@
 
 
 
-<meta name="description" content="##前言 Vuforia是一个知名的AR开发框架，同时支持iOS和Android开发平台。 众所周知，苹果在iOS11推出了自己的AR开发框架ARKit，但是仍有较大的局限性，比如在硬件上只支持iPhone6s及以后的设备，包括iPhoneSE，主要是需要A9以上的芯片支持；而Android端目前还没有官方统一的AR支持框架。所以在需要进行移动端的AR开发时，Vuforia框架是一个不错的选择。">
+<meta name="description" content="前言Vuforia是一个知名的AR开发框架，同时支持iOS和Android开发平台。 众所周知，苹果在iOS11推出了自己的AR开发框架ARKit，但是仍有较大的局限性，比如在硬件上只支持iPhone6s及以后的设备，包括iPhoneSE，主要是需要A9以上的芯片支持；而Android端目前还没有官方统一的AR支持框架。所以在需要进行移动端的AR开发时，Vuforia框架是一个不错的选择。 本文其">
 <meta name="keywords" content="Vuforia AR">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS知识专题之AR开发框架Vuforia学习笔记">
 <meta property="og:url" content="http://yoursite.com/2018/03/16/iOS知识专题之AR开发框架Vuforia学习笔记/index.html">
 <meta property="og:site_name" content="未来已来">
-<meta property="og:description" content="##前言 Vuforia是一个知名的AR开发框架，同时支持iOS和Android开发平台。 众所周知，苹果在iOS11推出了自己的AR开发框架ARKit，但是仍有较大的局限性，比如在硬件上只支持iPhone6s及以后的设备，包括iPhoneSE，主要是需要A9以上的芯片支持；而Android端目前还没有官方统一的AR支持框架。所以在需要进行移动端的AR开发时，Vuforia框架是一个不错的选择。">
-<meta property="og:updated_time" content="2018-03-16T11:48:54.912Z">
+<meta property="og:description" content="前言Vuforia是一个知名的AR开发框架，同时支持iOS和Android开发平台。 众所周知，苹果在iOS11推出了自己的AR开发框架ARKit，但是仍有较大的局限性，比如在硬件上只支持iPhone6s及以后的设备，包括iPhoneSE，主要是需要A9以上的芯片支持；而Android端目前还没有官方统一的AR支持框架。所以在需要进行移动端的AR开发时，Vuforia框架是一个不错的选择。 本文其">
+<meta property="og:updated_time" content="2018-03-16T11:55:57.058Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS知识专题之AR开发框架Vuforia学习笔记">
-<meta name="twitter:description" content="##前言 Vuforia是一个知名的AR开发框架，同时支持iOS和Android开发平台。 众所周知，苹果在iOS11推出了自己的AR开发框架ARKit，但是仍有较大的局限性，比如在硬件上只支持iPhone6s及以后的设备，包括iPhoneSE，主要是需要A9以上的芯片支持；而Android端目前还没有官方统一的AR支持框架。所以在需要进行移动端的AR开发时，Vuforia框架是一个不错的选择。">
+<meta name="twitter:description" content="前言Vuforia是一个知名的AR开发框架，同时支持iOS和Android开发平台。 众所周知，苹果在iOS11推出了自己的AR开发框架ARKit，但是仍有较大的局限性，比如在硬件上只支持iPhone6s及以后的设备，包括iPhoneSE，主要是需要A9以上的芯片支持；而Android端目前还没有官方统一的AR支持框架。所以在需要进行移动端的AR开发时，Vuforia框架是一个不错的选择。 本文其">
 
 
 
@@ -402,21 +402,18 @@
       
 
       
-        <p>##前言</p>
-<p><a href="https://developer.vuforia.com" target="_blank" rel="external">Vuforia</a>是一个知名的AR开发框架，同时支持iOS和Android开发平台。</p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><a href="https://developer.vuforia.com" target="_blank" rel="external">Vuforia</a>是一个知名的AR开发框架，同时支持iOS和Android开发平台。</p>
 <p>众所周知，苹果在iOS11推出了自己的AR开发框架ARKit，但是仍有较大的局限性，比如在硬件上只支持iPhone6s及以后的设备，包括iPhoneSE，主要是需要A9以上的芯片支持；而Android端目前还没有官方统一的AR支持框架。所以在需要进行移动端的AR开发时，Vuforia框架是一个不错的选择。</p>
 <p>本文其实是自己研究Vuforia框架的学习笔记，仅供参考，如有错误请批评指正。</p>
 <a id="more"></a>
-<p>##几个比较重要的类</p>
-<p>Vuforia官方提供了三种类型的API:Unity,C++和Java。三种类型API的内容都是一一对应的，所以只需要选择适合自己的一种API进行学习使用即可。</p>
-<p>###Vuforia::State<br>State中保存了当前AR环境中的摄像机帧和所有的trackables可跟踪对象。和Frame类似，State是个轻量级的对象，它的数据实际上保存在多个（其他类的）实例中。从State中查询的Trackables不能和从tracker中查询的Trackables指针比较，即使它们可能引用的是同一个对象。从state中查询的Trackables代表AR状态中临时的，不可变的view,因此不能修改。要想修改它们，必须从Tracker中查询它们。</p>
+<h2 id="几个比较重要的类"><a href="#几个比较重要的类" class="headerlink" title="几个比较重要的类"></a>几个比较重要的类</h2><p>Vuforia官方提供了三种类型的API:Unity,C++和Java。三种类型API的内容都是一一对应的，所以只需要选择适合自己的一种API进行学习使用即可。</p>
+<h3 id="Vuforia-State"><a href="#Vuforia-State" class="headerlink" title="Vuforia::State"></a>Vuforia::State</h3><p>State中保存了当前AR环境中的摄像机帧和所有的trackables可跟踪对象。和Frame类似，State是个轻量级的对象，它的数据实际上保存在多个（其他类的）实例中。从State中查询的Trackables不能和从tracker中查询的Trackables指针比较，即使它们可能引用的是同一个对象。从state中查询的Trackables代表AR状态中临时的，不可变的view,因此不能修改。要想修改它们，必须从Tracker中查询它们。</p>
 <p>在State中可能会包含有多个TrackableResult，因此可以从State中可以获取当前的某个TrackableResult对象。</p>
-<p>###Vuforia::TrackableResult<br>顾名思义，TrackableResult其实就是一个“跟踪的结果”，代表的是一个Trackable 在某一帧中的状态。</p>
+<h3 id="Vuforia-TrackableResult"><a href="#Vuforia-TrackableResult" class="headerlink" title="Vuforia::TrackableResult"></a>Vuforia::TrackableResult</h3><p>顾名思义，TrackableResult其实就是一个“跟踪的结果”，代表的是一个Trackable 在某一帧中的状态。</p>
 <p>我们可以通过其实例方法获取到当前结果的各种参数，包括Pose(当前的姿势或位置矩阵)和Trackable （可跟踪的对象）。</p>
-<p>###Vuforia::Trackable<br>Trackable是所有可被跟踪对象的基类。子类主要包括，锚点类，可跟踪的设备，模型，以及单词word等。</p>
+<h3 id="Vuforia-Trackable"><a href="#Vuforia-Trackable" class="headerlink" title="Vuforia::Trackable"></a>Vuforia::Trackable</h3><p>Trackable是所有可被跟踪对象的基类。子类主要包括，锚点类，可跟踪的设备，模型，以及单词word等。</p>
 <p>使用它的实例方法我们可以获取到当前被跟踪对象的名称，类型，是否extended tracking可扩展跟踪等信息。</p>
-<p>##参考链接</p>
-<ol>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ol>
 <li><a href="https://developer.vuforia.com" target="_blank" rel="external">Vuforia官方网站</a></li>
 <li><a href="https://library.vuforia.com/content/vuforia-library/en/reference/cpp/index.html" target="_blank" rel="external">Vuforia框架C++ API索引</a></li>
 </ol>
@@ -568,8 +565,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/uploads/avatar.JPG"
@@ -649,6 +655,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#几个比较重要的类"><span class="nav-number">2.</span> <span class="nav-text">几个比较重要的类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Vuforia-State"><span class="nav-number">2.1.</span> <span class="nav-text">Vuforia::State</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vuforia-TrackableResult"><span class="nav-number">2.2.</span> <span class="nav-text">Vuforia::TrackableResult</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vuforia-Trackable"><span class="nav-number">2.3.</span> <span class="nav-text">Vuforia::Trackable</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-number">3.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
