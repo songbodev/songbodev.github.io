@@ -61,7 +61,7 @@
     <link href="http://yoursite.com/2018/03/12/iOS%E7%9F%A5%E8%AF%86%E4%B8%93%E9%A2%98%E4%B9%8BGCD%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80/"/>
     <id>http://yoursite.com/2018/03/12/iOS知识专题之GCD学习笔记一/</id>
     <published>2018-03-12T01:20:08.000Z</published>
-    <updated>2018-03-16T07:44:57.427Z</updated>
+    <updated>2018-03-16T11:46:02.349Z</updated>
     
     <content type="html"><![CDATA[<p>##前言</p>
 <p>GCD是iOS和Mac OS X开发中处理并发的一个重要的底层技术，并且代码是开源的(<a href="https://opensource.apple.com/source/libdispatch/" target="_blank" rel="external">代码地址</a>)。它具有以下优点:</p>
