@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-03-16T07:40:40.228Z</updated>
+  <updated>2018-03-16T07:43:45.036Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,16 +16,104 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>iOS知识专题之GCD学习笔记一</title>
-    <link href="http://yoursite.com/2018/03/16/iOS%E7%9F%A5%E8%AF%86%E4%B8%93%E9%A2%98%E4%B9%8BGCD%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80/"/>
-    <id>http://yoursite.com/2018/03/16/iOS知识专题之GCD学习笔记一/</id>
-    <published>2018-03-16T07:40:40.000Z</published>
-    <updated>2018-03-16T07:40:40.228Z</updated>
+    <title>iOS知识专题之GCD学习笔记</title>
+    <link href="http://yoursite.com/2018/03/12/iOS%E7%9F%A5%E8%AF%86%E4%B8%93%E9%A2%98%E4%B9%8BGCD%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80/"/>
+    <id>http://yoursite.com/2018/03/12/iOS知识专题之GCD学习笔记一/</id>
+    <published>2018-03-12T01:20:08.000Z</published>
+    <updated>2018-03-16T07:43:45.036Z</updated>
+    
+    <content type="html"><![CDATA[<p>##前言</p>
+<p>GCD是iOS和Mac OS X开发中处理并发的一个重要的底层技术，并且代码是开源的(<a href="https://opensource.apple.com/source/libdispatch/" target="_blank" rel="external">代码地址</a>)。它具有以下优点:</p>
+<ul>
+<li>GCD 能通过推迟昂贵计算任务并在后台运行它们来改善你的应用的响应性能;</li>
+<li>GCD 提供一个易于使用的并发模型而不仅仅只是锁和线程，以帮助我们避开并发陷阱;</li>
+<li>GCD 具有在常见模式（例如单例）上用更高性能的原语优化你的代码的潜在能力。</li>
+</ul>
+<p>GCD与线程和并发紧密相关，而相关的概念又比较多，容易混淆。本文是笔者学习GCD的笔记，只是为了便于加深记忆和以后查询，本文中的绝大部分内容都来自于<a href="https://github.com/nixzhu/dev-blog/blob/master/2014-04-19-grand-central-dispatch-in-depth-part-1.md" target="_blank" rel="external">这篇博客</a>,又加入了自己的一些总结，感谢大神的贡献。</p>
+<a id="more"></a>
+<p>##相关概念</p>
+<p>####Serial vs. Concurrent 串行 vs. 并发</p>
+<p>这些术语描述当任务相对于其它任务被执行，任务串行执行就是每次只有一个任务被执行，任务并发执行就是在同一时间可以有多个任务被执行。</p>
+<p>####Synchronous vs. Asynchronous 同步 vs. 异步</p>
+<p>在 GCD 中，这些术语描述当一个函数相对于另一个任务完成，此任务是该函数要求 GCD 执行的。</p>
+<p>一个<em>同步</em>函数只在完成了它预定的任务后才返回;</p>
+<p>一个<em>异步</em>函数，刚好相反，会立即返回，预定的任务会完成但不会等它完成。因此，一个异步函数不会阻塞当前线程去执行下一个函数。</p>
+<p>####Critical Section 临界区</p>
+<p>就是一段代码不能被并发执行，也就是，两个线程不能同时执行这段代码。这很常见，因为代码去操作一个共享资源，例如一个变量若能被并发进程访问，那么它很可能会变质（它的值不再可信）。</p>
+<blockquote>
+<p>临界区通俗的说，其实就是这个“区域”不能在不同线程同时去访问。</p>
+</blockquote>
+<p>####Race Condition 竞态条件</p>
+<p>这种状况是指基于特定序列或时机的事件的软件系统以不受控制的方式运行的行为，例如程序的并发任务执行的确切顺序。竞态条件可导致无法预测的行为，而不能通过代码检查立即发现。</p>
+<blockquote>
+<p>在并发任务中，写在前面的任务并不一定先执行结束，如果想当然的任务先写的代码就会先结束，就可能会导致竞态条件。</p>
+</blockquote>
+<p>####Deadlock 死锁</p>
+<p>两个（有时更多）东西——在大多数情况下，是线程——所谓的死锁是指它们都卡住了，并等待对方完成或执行其它操作。第一个不能完成是因为它在等待第二个的完成。但第二个也不能完成，因为它在等待第一个的完成。</p>
+<blockquote>
+<p>两个线程都卡住了,因为它们都在等待对方的完成。</p>
+</blockquote>
+<p>####Thread Safe 线程安全</p>
+<p>线程安全的代码能在多线程或并发任务中被安全的调用，而不会导致任何问题（数据损坏，崩溃，等）。线程不安全的代码在某个时刻只能在一个上下文中运行。</p>
+<p>一个线程安全代码的例子是 NSDictionary 。你可以在同一时间在多个线程中使用它而不会有问题。另一方面，NSMutableDictionary 就不是线程安全的，应该保证一次只能有一个线程访问它。</p>
+<p>####Context Switch 上下文切换</p>
+<p>一个上下文切换指当你在单个进程里切换执行不同的线程时存储与恢复执行状态的过程。这个过程在编写多任务应用时很普遍，但会带来一些额外的开销。</p>
+<p>####Concurrency vs Parallelism 并发与并行</p>
+<p>我们知道,并发代码的不同部分可以“同步”执行(即可以同时的执行)。然而，该怎样发生或是否发生都取决于系统。多核设备通过并行来同时执行多个线程；然而，为了使单核设备也能实现这一点，它们必须先运行一个线程，执行一个上下文切换，然后运行另一个线程或进程。这通常发生地足够快以致给我们并发执行地错觉，如下图所示：</p>
+<p><img src="http://osv8n47s0.bkt.clouddn.com/%E5%B9%B6%E5%8F%91%E4%B8%8E%E5%B9%B6%E8%A1%8C.png" alt="并发与并行"></p>
+<blockquote>
+<p>上图中,上面的是真正的并行,而下面是并发,但是并未真正的并行，只是我们有一种“并行的错觉”。</p>
+<p>虽然你可以编写代码在 GCD 下并发执行，但 GCD 会决定有多少并行的需求。并行<em>要求</em>并发，但并发并不能<em>保证</em>并行。</p>
+</blockquote>
+<p>更深入的观点是并发实际上是关于<em>构造</em>。当你在脑海中用 GCD 编写代码，你组织你的代码来暴露能同时运行的多个工作片段，以及不能同时运行的那些。</p>
+<blockquote>
+<p>通俗的可以理解为,并发是我们写的代码，让两个任务同时执行，而是否真的并行是由系统决定的。</p>
+</blockquote>
+<p>####Queues 队列</p>
+<p>GCD 提供有 dispatch queues 来处理代码块，这些队列管理你提供给 GCD 的任务并用 <code>FIFO (先进先出)</code>顺序执行这些任务。这就保证了第一个被添加到队列里的任务会是队列中第一个开始的任务，而第二个被添加的任务将第二个开始，如此直到队列的终点。</p>
+<p>所有的调度队列（dispatch queues）自身都是线程安全的，你能从多个线程并行的访问它们。</p>
+<p>当你了解了调度队列如何为你自己代码的不同部分提供线程安全后，GCD的优点就是显而易见的。关于这一点的关键是选择正确<strong>类型</strong>的调度队列和正确的<strong>调度函数</strong>来提交你的工作。</p>
+<blockquote>
+<p>调度队列主要是串行和并发,调度函数主要是同步和异步。选择合适的队列和合适的调度函数来实现自己特定的功能。</p>
+</blockquote>
+<h4 id="Serial-Queues-串行队列"><a href="#Serial-Queues-串行队列" class="headerlink" title="Serial Queues 串行队列"></a>Serial Queues 串行队列</h4><p>串行队列中的任务一次执行一个，每个任务只在前一个任务完成时才开始。而且，你不知道在一个 Block 结束和下一个开始之间的时间长度，如下图所示：</p>
+<p><img src="http://osv8n47s0.bkt.clouddn.com/%E4%B8%B2%E8%A1%8C%E9%98%9F%E5%88%97.png" alt="串行队列"></p>
+<p>这些任务的执行时机受到 GCD 的控制；唯一能确保的事情是 GCD 一次只执行一个任务，并且按照我们添加到队列的顺序来执行。</p>
+<p>由于在串行队列中不会有两个任务并发运行，因此不会出现同时访问临界区的风险；相对于这些任务来说，这就从竞态条件下保护了临界区。所以如果访问临界区的唯一方式是通过提交到调度队列的任务，那么你就不需要担心临界区的安全问题了。</p>
+<h4 id="Concurrent-Queues-并发队列"><a href="#Concurrent-Queues-并发队列" class="headerlink" title="Concurrent Queues 并发队列"></a>Concurrent Queues 并发队列</h4><p>在并发队列中的任务能得到的保证是它们会按照被添加的顺序开始执行，但这就是全部的保证了。任务可能以任意顺序完成，你不会知道何时开始运行下一个任务，或者任意时刻有多少 Block 在运行。再说一遍，这完全取决于 GCD 。</p>
+<p>下图展示了一个示例任务执行计划，GCD 管理着四个并发任务：</p>
+<p><img src="http://osv8n47s0.bkt.clouddn.com/%E5%B9%B6%E5%8F%91%E9%98%9F%E5%88%97.png" alt="并发队列"></p>
+<p>注意 Block 1,2 和 3 都立马开始运行，一个接一个。在 Block 0 开始后，Block 1等待了好一会儿才开始。同样， Block 3 在 Block 2 之后才开始，但它先于 Block 2 完成。</p>
+<p>何时开始一个 Block 完全取决于 GCD 。如果一个 Block 的执行时间与另一个重叠，也是由 GCD 来决定是否将其运行在另一个不同的核心上，如果那个核心可用，否则就用上下文切换的方式来执行不同的 Block 。</p>
+<blockquote>
+<p>再次强调:并发队列只能保证,任务按照被添加的顺序开始执行。即只有开始顺序是确定的。</p>
+</blockquote>
+<p>有趣的是， GCD 提供给你至少五个特定的队列，可根据队列类型选择使用。</p>
+<h2 id="GCD队列类型——Queue-Types"><a href="#GCD队列类型——Queue-Types" class="headerlink" title="GCD队列类型——Queue Types"></a>GCD队列类型——Queue Types</h2><p>首先，系统提供给你一个叫做 <strong>主队列（main queue）</strong> 的特殊队列。和其它串行队列一样，这个队列中的任务一次只能执行一个。然而，它能保证所有的任务都在<strong>主线程</strong>执行，而主线程是唯一可用于更新 UI 的线程。这个队列就是用于发消息给 UIView 或发送通知的。</p>
+<p>系统同时提供给你好几个<em>并发队列</em>。它们叫做 <strong>全局调度队列（Global Dispatch Queues）</strong>。目前的四个全局队列有着不同的<em>优先级</em>：background、low、default 以及 high。要知道，Apple 的 API 也会使用这些队列，所以你添加的任何任务都不会是这些队列中唯一的任务。</p>
+<p>最后，<strong>你也可以创建自己的串行队列或并发队列</strong>。这就是说，至少有<em>五个</em>队列任你处置：主队列、四个全局调度队列，再加上任何你自己创建的队列。</p>
+<p>GCD 的“艺术”归结为选择合适的队列来调度函数以提交你的工作。</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ol>
+<li><a href="https://opensource.apple.com/source/libdispatch/" target="_blank" rel="external">GCD源码</a></li>
+<li><a href="https://github.com/nixzhu/dev-blog/blob/master/2014-04-19-grand-central-dispatch-in-depth-part-1.md" target="_blank" rel="external">GCD 深入理解：第一部分</a></li>
+</ol>
+]]></content>
     
     <summary type="html">
     
+      &lt;p&gt;##前言&lt;/p&gt;
+&lt;p&gt;GCD是iOS和Mac OS X开发中处理并发的一个重要的底层技术，并且代码是开源的(&lt;a href=&quot;https://opensource.apple.com/source/libdispatch/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;代码地址&lt;/a&gt;)。它具有以下优点:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;GCD 能通过推迟昂贵计算任务并在后台运行它们来改善你的应用的响应性能;&lt;/li&gt;
+&lt;li&gt;GCD 提供一个易于使用的并发模型而不仅仅只是锁和线程，以帮助我们避开并发陷阱;&lt;/li&gt;
+&lt;li&gt;GCD 具有在常见模式（例如单例）上用更高性能的原语优化你的代码的潜在能力。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;GCD与线程和并发紧密相关，而相关的概念又比较多，容易混淆。本文是笔者学习GCD的笔记，只是为了便于加深记忆和以后查询，本文中的绝大部分内容都来自于&lt;a href=&quot;https://github.com/nixzhu/dev-blog/blob/master/2014-04-19-grand-central-dispatch-in-depth-part-1.md&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这篇博客&lt;/a&gt;,又加入了自己的一些总结，感谢大神的贡献。&lt;/p&gt;
+    
     </summary>
     
+    
+      <category term="iOS 技术 GCD" scheme="http://yoursite.com/tags/iOS-%E6%8A%80%E6%9C%AF-GCD/"/>
     
   </entry>
   
