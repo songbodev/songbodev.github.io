@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-03-16T07:43:45.036Z</updated>
+  <updated>2018-03-16T07:58:23.618Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,11 +16,52 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>iOS知识专题之GCD学习笔记</title>
+    <title>iOS知识专题之AR开发框架Vuforia学习笔记</title>
+    <link href="http://yoursite.com/2018/03/16/iOS%E7%9F%A5%E8%AF%86%E4%B8%93%E9%A2%98%E4%B9%8BAR%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6Vuforia%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <id>http://yoursite.com/2018/03/16/iOS知识专题之AR开发框架Vuforia学习笔记/</id>
+    <published>2018-03-16T04:23:59.000Z</published>
+    <updated>2018-03-16T07:58:23.618Z</updated>
+    
+    <content type="html"><![CDATA[<p>##前言</p>
+<p><a href="https://developer.vuforia.com" target="_blank" rel="external">Vuforia</a>是一个知名的AR开发框架，同时支持iOS和Android开发平台。</p>
+<p>众所周知，苹果在iOS11推出了自己的AR开发框架ARKit，但是仍有较大的局限性，比如在硬件上只支持iPhone6s及以后的设备，包括iPhoneSE，主要是需要A9以上的芯片支持；而Android端目前还没有官方统一的AR支持框架。所以在需要进行移动端的AR开发时，Vuforia框架是一个不错的选择。</p>
+<p>本文其实是自己研究Vuforia框架的学习笔记，仅供参考，如有错误请批评指正。</p>
+<a id="more"></a>
+<p>##几个比较重要的类</p>
+<p>Vuforia官方提供了三种类型的API:Unity,C++和Java。三种类型API的内容都是一一对应的，所以只需要选择适合自己的一种API进行学习使用即可。</p>
+<p>###Vuforia::State<br>State中保存了当前AR环境中的摄像机帧和所有的trackables可跟踪对象。和Frame类似，State是个轻量级的对象，它的数据实际上保存在多个（其他类的）实例中。从State中查询的Trackables不能和从tracker中查询的Trackables指针比较，即使它们可能引用的是同一个对象。从state中查询的Trackables代表AR状态中临时的，不可变的view,因此不能修改。要想修改它们，必须从Tracker中查询它们。</p>
+<p>在State中可能会包含有多个TrackableResult，因此可以从State中可以获取当前的某个TrackableResult对象。</p>
+<p>###Vuforia::TrackableResult<br>顾名思义，TrackableResult其实就是一个“跟踪的结果”，代表的是一个Trackable 在某一帧中的状态。</p>
+<p>我们可以通过其实例方法获取到当前结果的各种参数，包括Pose(当前的姿势或位置矩阵)和Trackable （可跟踪的对象）。</p>
+<p>###Vuforia::Trackable<br>Trackable是所有可被跟踪对象的基类。子类主要包括，锚点类，可跟踪的设备，模型，以及单词word等。</p>
+<p>使用它的实例方法我们可以获取到当前被跟踪对象的名称，类型，是否extended tracking可扩展跟踪等信息。</p>
+<p>##参考链接</p>
+<ol>
+<li><a href="https://developer.vuforia.com" target="_blank" rel="external">Vuforia官方网站</a></li>
+<li><a href="https://library.vuforia.com/content/vuforia-library/en/reference/cpp/index.html" target="_blank" rel="external">Vuforia框架C++ API索引</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;##前言&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://developer.vuforia.com&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Vuforia&lt;/a&gt;是一个知名的AR开发框架，同时支持iOS和Android开发平台。&lt;/p&gt;
+&lt;p&gt;众所周知，苹果在iOS11推出了自己的AR开发框架ARKit，但是仍有较大的局限性，比如在硬件上只支持iPhone6s及以后的设备，包括iPhoneSE，主要是需要A9以上的芯片支持；而Android端目前还没有官方统一的AR支持框架。所以在需要进行移动端的AR开发时，Vuforia框架是一个不错的选择。&lt;/p&gt;
+&lt;p&gt;本文其实是自己研究Vuforia框架的学习笔记，仅供参考，如有错误请批评指正。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Vuforia AR" scheme="http://yoursite.com/tags/Vuforia-AR/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>iOS知识专题之GCD学习笔记一</title>
     <link href="http://yoursite.com/2018/03/12/iOS%E7%9F%A5%E8%AF%86%E4%B8%93%E9%A2%98%E4%B9%8BGCD%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80/"/>
     <id>http://yoursite.com/2018/03/12/iOS知识专题之GCD学习笔记一/</id>
     <published>2018-03-12T01:20:08.000Z</published>
-    <updated>2018-03-16T07:43:45.036Z</updated>
+    <updated>2018-03-16T07:44:57.427Z</updated>
     
     <content type="html"><![CDATA[<p>##前言</p>
 <p>GCD是iOS和Mac OS X开发中处理并发的一个重要的底层技术，并且代码是开源的(<a href="https://opensource.apple.com/source/libdispatch/" target="_blank" rel="external">代码地址</a>)。它具有以下优点:</p>
