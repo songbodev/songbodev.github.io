@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-03-19T07:25:59.441Z</updated>
+  <updated>2018-03-19T07:33:13.028Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,9 +20,9 @@
     <link href="http://yoursite.com/2018/03/19/iOS%E7%9F%A5%E8%AF%86%E4%B8%93%E9%A2%98%E4%B9%8BGCD%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%BA%8C/"/>
     <id>http://yoursite.com/2018/03/19/iOS知识专题之GCD学习笔记二/</id>
     <published>2018-03-19T01:13:12.000Z</published>
-    <updated>2018-03-19T07:25:59.441Z</updated>
+    <updated>2018-03-19T07:33:13.028Z</updated>
     
-    <content type="html"><![CDATA[<p><strong>说明:</strong>和上一篇GCD学习笔记一样,本篇文章主要内容还是来自于<a href="https://github.com/nixzhu/dev-blog/blob/master/2014-04-19-grand-central-dispatch-in-depth-part-1.md" target="_blank" rel="external">这篇博客</a>。笔者只是对内容进行了少量的修改并加入了自己的一些总结，供</p>
+    <content type="html"><![CDATA[<p><strong>说明:</strong>和上一篇GCD学习笔记一样,本篇文章主要内容还是来自于<a href="https://github.com/nixzhu/dev-blog/blob/master/2014-04-19-grand-central-dispatch-in-depth-part-1.md" target="_blank" rel="external">这篇博客</a>。笔者只是对内容进行了少量的修改并加入了自己的一些总结，供后续查阅。</p>
 <h2 id="GCD常用函数使用详解"><a href="#GCD常用函数使用详解" class="headerlink" title="GCD常用函数使用详解"></a>GCD常用函数使用详解</h2><h4 id="一、用-dispatch-async-处理后台任务"><a href="#一、用-dispatch-async-处理后台任务" class="headerlink" title="一、用 dispatch_async 处理后台任务"></a>一、用 dispatch_async 处理后台任务</h4><p><code>dispatch_async</code> 添加一个 Block 到队列就立即返回了。任务会在之后由 GCD 决定执行。当你需要在后台执行一个基于网络或 CPU 紧张的任务时就使用 dispatch_async ，这样就不会阻塞当前线程。例如:</p>
 <pre><code>//这里是主线程
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -35,6 +35,7 @@
     });
 </code></pre>
 
+<a id="more"></a>
 <p>在 <code>dispatch_async</code> 上如何使用 <strong>队列类型</strong> 快速指导:</p>
 <blockquote>
 <ul>
@@ -151,7 +152,18 @@
     
     <summary type="html">
     
-      &lt;p&gt;&lt;strong&gt;说明:&lt;/strong&gt;和上一篇GCD学习笔记一样,本篇文章主要内容还是来自于&lt;a href=&quot;https://github.com/nixzhu/dev-blog/blob/master/2014-04-19-grand-central-dispatch-
+      &lt;p&gt;&lt;strong&gt;说明:&lt;/strong&gt;和上一篇GCD学习笔记一样,本篇文章主要内容还是来自于&lt;a href=&quot;https://github.com/nixzhu/dev-blog/blob/master/2014-04-19-grand-central-dispatch-in-depth-part-1.md&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这篇博客&lt;/a&gt;。笔者只是对内容进行了少量的修改并加入了自己的一些总结，供后续查阅。&lt;/p&gt;
+&lt;h2 id=&quot;GCD常用函数使用详解&quot;&gt;&lt;a href=&quot;#GCD常用函数使用详解&quot; class=&quot;headerlink&quot; title=&quot;GCD常用函数使用详解&quot;&gt;&lt;/a&gt;GCD常用函数使用详解&lt;/h2&gt;&lt;h4 id=&quot;一、用-dispatch-async-处理后台任务&quot;&gt;&lt;a href=&quot;#一、用-dispatch-async-处理后台任务&quot; class=&quot;headerlink&quot; title=&quot;一、用 dispatch_async 处理后台任务&quot;&gt;&lt;/a&gt;一、用 dispatch_async 处理后台任务&lt;/h4&gt;&lt;p&gt;&lt;code&gt;dispatch_async&lt;/code&gt; 添加一个 Block 到队列就立即返回了。任务会在之后由 GCD 决定执行。当你需要在后台执行一个基于网络或 CPU 紧张的任务时就使用 dispatch_async ，这样就不会阻塞当前线程。例如:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;//这里是主线程
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        //多线程执行,网络或耗时操作
+        //...
+        dispatch_async(dispatch_get_main_queue(), ^{
+            //主线程执行,更新UI等
+            //...
+        });
+    });
+&lt;/code&gt;&lt;/pre&gt;
     
     </summary>
     

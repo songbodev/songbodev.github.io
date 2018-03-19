@@ -95,18 +95,18 @@
 
 
 
-<meta name="description" content="说明:和上一篇GCD学习笔记一样,本篇文章主要内容还是来自于这篇博客。笔者只是对内容进行了少量的修改并加入了自己的一些总结，供 GCD常用函数使用详解一、用 dispatch_async 处理后台任务dispatch_async 添加一个 Block 到队列就立即返回了。任务会在之后由 GCD 决定执行。当你需要在后台执行一个基于网络或 CPU 紧张的任务时就使用 dispatch_async ，">
+<meta name="description" content="说明:和上一篇GCD学习笔记一样,本篇文章主要内容还是来自于这篇博客。笔者只是对内容进行了少量的修改并加入了自己的一些总结，供后续查阅。 GCD常用函数使用详解一、用 dispatch_async 处理后台任务dispatch_async 添加一个 Block 到队列就立即返回了。任务会在之后由 GCD 决定执行。当你需要在后台执行一个基于网络或 CPU 紧张的任务时就使用 dispatch_as">
 <meta name="keywords" content="iOS 技术 GCD">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS知识专题之GCD学习笔记二">
 <meta property="og:url" content="http://yoursite.com/2018/03/19/iOS知识专题之GCD学习笔记二/index.html">
 <meta property="og:site_name" content="未来已来">
-<meta property="og:description" content="说明:和上一篇GCD学习笔记一样,本篇文章主要内容还是来自于这篇博客。笔者只是对内容进行了少量的修改并加入了自己的一些总结，供 GCD常用函数使用详解一、用 dispatch_async 处理后台任务dispatch_async 添加一个 Block 到队列就立即返回了。任务会在之后由 GCD 决定执行。当你需要在后台执行一个基于网络或 CPU 紧张的任务时就使用 dispatch_async ，">
+<meta property="og:description" content="说明:和上一篇GCD学习笔记一样,本篇文章主要内容还是来自于这篇博客。笔者只是对内容进行了少量的修改并加入了自己的一些总结，供后续查阅。 GCD常用函数使用详解一、用 dispatch_async 处理后台任务dispatch_async 添加一个 Block 到队列就立即返回了。任务会在之后由 GCD 决定执行。当你需要在后台执行一个基于网络或 CPU 紧张的任务时就使用 dispatch_as">
 <meta property="og:image" content="http://osv8n47s0.bkt.clouddn.com/dispatch_barrier.png">
-<meta property="og:updated_time" content="2018-03-19T07:25:59.441Z">
+<meta property="og:updated_time" content="2018-03-19T07:33:13.028Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS知识专题之GCD学习笔记二">
-<meta name="twitter:description" content="说明:和上一篇GCD学习笔记一样,本篇文章主要内容还是来自于这篇博客。笔者只是对内容进行了少量的修改并加入了自己的一些总结，供 GCD常用函数使用详解一、用 dispatch_async 处理后台任务dispatch_async 添加一个 Block 到队列就立即返回了。任务会在之后由 GCD 决定执行。当你需要在后台执行一个基于网络或 CPU 紧张的任务时就使用 dispatch_async ，">
+<meta name="twitter:description" content="说明:和上一篇GCD学习笔记一样,本篇文章主要内容还是来自于这篇博客。笔者只是对内容进行了少量的修改并加入了自己的一些总结，供后续查阅。 GCD常用函数使用详解一、用 dispatch_async 处理后台任务dispatch_async 添加一个 Block 到队列就立即返回了。任务会在之后由 GCD 决定执行。当你需要在后台执行一个基于网络或 CPU 紧张的任务时就使用 dispatch_as">
 <meta name="twitter:image" content="http://osv8n47s0.bkt.clouddn.com/dispatch_barrier.png">
 
 
@@ -404,7 +404,7 @@
       
 
       
-        <p><strong>说明:</strong>和上一篇GCD学习笔记一样,本篇文章主要内容还是来自于<a href="https://github.com/nixzhu/dev-blog/blob/master/2014-04-19-grand-central-dispatch-in-depth-part-1.md" target="_blank" rel="external">这篇博客</a>。笔者只是对内容进行了少量的修改并加入了自己的一些总结，供</p>
+        <p><strong>说明:</strong>和上一篇GCD学习笔记一样,本篇文章主要内容还是来自于<a href="https://github.com/nixzhu/dev-blog/blob/master/2014-04-19-grand-central-dispatch-in-depth-part-1.md" target="_blank" rel="external">这篇博客</a>。笔者只是对内容进行了少量的修改并加入了自己的一些总结，供后续查阅。</p>
 <h2 id="GCD常用函数使用详解"><a href="#GCD常用函数使用详解" class="headerlink" title="GCD常用函数使用详解"></a>GCD常用函数使用详解</h2><h4 id="一、用-dispatch-async-处理后台任务"><a href="#一、用-dispatch-async-处理后台任务" class="headerlink" title="一、用 dispatch_async 处理后台任务"></a>一、用 dispatch_async 处理后台任务</h4><p><code>dispatch_async</code> 添加一个 Block 到队列就立即返回了。任务会在之后由 GCD 决定执行。当你需要在后台执行一个基于网络或 CPU 紧张的任务时就使用 dispatch_async ，这样就不会阻塞当前线程。例如:</p>
 <pre><code>//这里是主线程
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -417,6 +417,7 @@
     });
 </code></pre>
 
+<a id="more"></a>
 <p>在 <code>dispatch_async</code> 上如何使用 <strong>队列类型</strong> 快速指导:</p>
 <blockquote>
 <ul>
