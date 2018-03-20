@@ -103,7 +103,7 @@
 <meta property="og:site_name" content="未来已来">
 <meta property="og:description" content="说明:和上一篇GCD学习笔记一样,本篇文章主要内容还是来自于这篇博客。笔者只是对内容进行了少量的修改并加入了自己的一些总结，供后续查阅。 GCD常用函数使用详解一、用 dispatch_async 处理后台任务dispatch_async 添加一个 Block 到队列就立即返回了。任务会在之后由 GCD 决定执行。当你需要在后台执行一个基于网络或 CPU 紧张的任务时就使用 dispatch_as">
 <meta property="og:image" content="http://osv8n47s0.bkt.clouddn.com/dispatch_barrier.png">
-<meta property="og:updated_time" content="2018-03-19T07:33:13.028Z">
+<meta property="og:updated_time" content="2018-03-19T09:37:48.611Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS知识专题之GCD学习笔记二">
 <meta name="twitter:description" content="说明:和上一篇GCD学习笔记一样,本篇文章主要内容还是来自于这篇博客。笔者只是对内容进行了少量的修改并加入了自己的一些总结，供后续查阅。 GCD常用函数使用详解一、用 dispatch_async 处理后台任务dispatch_async 添加一个 Block 到队列就立即返回了。任务会在之后由 GCD 决定执行。当你需要在后台执行一个基于网络或 CPU 紧张的任务时就使用 dispatch_as">
@@ -523,11 +523,14 @@
 }</code></pre>
 
 <h4 id="五、总结-dispatch-async-和-dispatch-sync-的对比理解"><a href="#五、总结-dispatch-async-和-dispatch-sync-的对比理解" class="headerlink" title="五、总结:dispatch_async 和 dispatch_sync 的对比理解"></a>五、总结:<code>dispatch_async</code> 和 <code>dispatch_sync</code> 的对比理解</h4><p><code>dispatch_sync</code> 添加任务到一个队列并等待直到任务完成。<code>dispatch_async</code>做类似的事情，但不同之处是它不会等待任务的完成，而是立即继续“调用线程”的其它任务。</p>
-<h2 id="多线程开发Tips"><a href="#多线程开发Tips" class="headerlink" title="多线程开发Tips"></a>多线程开发Tips</h2><p>多线程开发中有很多需要注意的点，本文将一些常见的Tips列下来，供参考。</p>
+<h2 id="多线程开发Tips"><a href="#多线程开发Tips" class="headerlink" title="多线程开发Tips"></a>多线程开发Tips</h2><p>多线程开发中有很多需要注意的点或者比较好的实践，本文将一些常见的Tips列下来，供参考。</p>
 <ol>
 <li>必须总是在主线程访问 UIKit 的类。</li>
 <li>如果计划优化自己项目，可以利用 Instruments 中的 Time Profile 模版来分析项目中的CPU占用情况。</li>
 <li>使用Instruments进行分析时,最好采用真机来测试，会比模拟器更加准确。</li>
+<li>网络请求的相关需求常常会用到多线程，我们可以通过一些手段模拟网络比较差的环境来进行测试：真机可以在设置——&gt;开发者——&gt;Network Link Conditioner——&gt;开启并选择一个profile来实现；模拟器可以使用<a href="http://nshipster.com/network-link-conditioner/" target="_blank" rel="external">来自 GitHub 的 Network Link Conditioner</a>来改变网络速度。</li>
+<li>我们用于创建项目的时间是有限的，<strong>除非实在太糟糕否则不要浪费时间去提前优化代码</strong>。如果想要进行一定的优化，那就去优化那些明显值得付出时间的部分。我们可以通过在 Instruments 里分析项目运行情况，找出最长运行时间的方法。</li>
+<li>通常情况下，优化代码会让代码更加复杂，不利于自己和其他开发者阅读。请确保添加的复杂性能换来足够多的好处。</li>
 </ol>
 <h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="https://github.com/nixzhu/dev-blog/blob/master/2014-04-19-grand-central-dispatch-in-depth-part-1.md" target="_blank" rel="external">GCD 深入理解：第一部分</a></p>
 
@@ -602,6 +605,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/19/iOS知识专题之GCD学习笔记三/" rel="prev" title="iOS知识专题之GCD学习笔记三">
+                iOS知识专题之GCD学习笔记三 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -703,7 +710,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
