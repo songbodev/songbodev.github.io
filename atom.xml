@@ -85,11 +85,48 @@ dispatch_source_create(dispatch_source_type_t type,
   </entry>
   
   <entry>
+    <title>iOS知识专题之AR开发框架Vuforia学习笔记</title>
+    <link href="http://yoursite.com/2018/03/16/iOS%E7%9F%A5%E8%AF%86%E4%B8%93%E9%A2%98%E4%B9%8BAR%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6Vuforia%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <id>http://yoursite.com/2018/03/16/iOS知识专题之AR开发框架Vuforia学习笔记/</id>
+    <published>2018-03-16T04:23:59.000Z</published>
+    <updated>2018-03-16T11:55:57.058Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><a href="https://developer.vuforia.com" target="_blank" rel="external">Vuforia</a>是一个知名的AR开发框架，同时支持iOS和Android开发平台。</p>
+<p>众所周知，苹果在iOS11推出了自己的AR开发框架ARKit，但是仍有较大的局限性，比如在硬件上只支持iPhone6s及以后的设备，包括iPhoneSE，主要是需要A9以上的芯片支持；而Android端目前还没有官方统一的AR支持框架。所以在需要进行移动端的AR开发时，Vuforia框架是一个不错的选择。</p>
+<p>本文其实是自己研究Vuforia框架的学习笔记，仅供参考，如有错误请批评指正。</p>
+<a id="more"></a>
+<h2 id="几个比较重要的类"><a href="#几个比较重要的类" class="headerlink" title="几个比较重要的类"></a>几个比较重要的类</h2><p>Vuforia官方提供了三种类型的API:Unity,C++和Java。三种类型API的内容都是一一对应的，所以只需要选择适合自己的一种API进行学习使用即可。</p>
+<h3 id="Vuforia-State"><a href="#Vuforia-State" class="headerlink" title="Vuforia::State"></a>Vuforia::State</h3><p>State中保存了当前AR环境中的摄像机帧和所有的trackables可跟踪对象。和Frame类似，State是个轻量级的对象，它的数据实际上保存在多个（其他类的）实例中。从State中查询的Trackables不能和从tracker中查询的Trackables指针比较，即使它们可能引用的是同一个对象。从state中查询的Trackables代表AR状态中临时的，不可变的view,因此不能修改。要想修改它们，必须从Tracker中查询它们。</p>
+<p>在State中可能会包含有多个TrackableResult，因此可以从State中可以获取当前的某个TrackableResult对象。</p>
+<h3 id="Vuforia-TrackableResult"><a href="#Vuforia-TrackableResult" class="headerlink" title="Vuforia::TrackableResult"></a>Vuforia::TrackableResult</h3><p>顾名思义，TrackableResult其实就是一个“跟踪的结果”，代表的是一个Trackable 在某一帧中的状态。</p>
+<p>我们可以通过其实例方法获取到当前结果的各种参数，包括Pose(当前的姿势或位置矩阵)和Trackable （可跟踪的对象）。</p>
+<h3 id="Vuforia-Trackable"><a href="#Vuforia-Trackable" class="headerlink" title="Vuforia::Trackable"></a>Vuforia::Trackable</h3><p>Trackable是所有可被跟踪对象的基类。子类主要包括，锚点类，可跟踪的设备，模型，以及单词word等。</p>
+<p>使用它的实例方法我们可以获取到当前被跟踪对象的名称，类型，是否extended tracking可扩展跟踪等信息。</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ol>
+<li><a href="https://developer.vuforia.com" target="_blank" rel="external">Vuforia官方网站</a></li>
+<li><a href="https://library.vuforia.com/content/vuforia-library/en/reference/cpp/index.html" target="_blank" rel="external">Vuforia框架C++ API索引</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://developer.vuforia.com&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Vuforia&lt;/a&gt;是一个知名的AR开发框架，同时支持iOS和Android开发平台。&lt;/p&gt;
+&lt;p&gt;众所周知，苹果在iOS11推出了自己的AR开发框架ARKit，但是仍有较大的局限性，比如在硬件上只支持iPhone6s及以后的设备，包括iPhoneSE，主要是需要A9以上的芯片支持；而Android端目前还没有官方统一的AR支持框架。所以在需要进行移动端的AR开发时，Vuforia框架是一个不错的选择。&lt;/p&gt;
+&lt;p&gt;本文其实是自己研究Vuforia框架的学习笔记，仅供参考，如有错误请批评指正。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Vuforia AR" scheme="http://yoursite.com/tags/Vuforia-AR/"/>
+    
+  </entry>
+  
+  <entry>
     <title>iOS知识专题之GCD学习笔记三</title>
-    <link href="http://yoursite.com/2018/03/19/iOS%E7%9F%A5%E8%AF%86%E4%B8%93%E9%A2%98%E4%B9%8BGCD%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%89/"/>
-    <id>http://yoursite.com/2018/03/19/iOS知识专题之GCD学习笔记三/</id>
-    <published>2018-03-19T07:49:51.000Z</published>
-    <updated>2018-03-20T04:19:22.110Z</updated>
+    <link href="http://yoursite.com/2017/10/27/iOS%E7%9F%A5%E8%AF%86%E4%B8%93%E9%A2%98%E4%B9%8BGCD%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%89/"/>
+    <id>http://yoursite.com/2017/10/27/iOS知识专题之GCD学习笔记三/</id>
+    <published>2017-10-27T07:49:51.000Z</published>
+    <updated>2018-03-20T04:30:49.352Z</updated>
     
     <content type="html"><![CDATA[<p><strong>前言:</strong>这是GCD学习笔记的第三篇,主要总结了<code>Dispatch Groups</code>和<code>dispatch_apply</code>两个知识点。<code>Dispatch Groups</code>主要用于对批量执行的异步任务进行监控,而<code>dispatch_apply</code>可用于并发执行迭代操作。</p>
 <h3 id="一、使用Dispatch-Groups（调度组）"><a href="#一、使用Dispatch-Groups（调度组）" class="headerlink" title="一、使用Dispatch Groups（调度组）"></a>一、使用Dispatch Groups（调度组）</h3><p>在开发中，有时候我们会遇到这样的需求：我们需要异步的执行多个任务,并在所有任务执行完成时再进行另外的某个操作，此时实际上我们是需要监控并发的异步事件执行进度。</p>
@@ -165,10 +202,10 @@ dispatch_source_create(dispatch_source_type_t type,
   
   <entry>
     <title>iOS知识专题之GCD学习笔记二</title>
-    <link href="http://yoursite.com/2018/03/19/iOS%E7%9F%A5%E8%AF%86%E4%B8%93%E9%A2%98%E4%B9%8BGCD%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%BA%8C/"/>
-    <id>http://yoursite.com/2018/03/19/iOS知识专题之GCD学习笔记二/</id>
-    <published>2018-03-19T01:13:12.000Z</published>
-    <updated>2018-03-19T09:37:48.611Z</updated>
+    <link href="http://yoursite.com/2017/10/22/iOS%E7%9F%A5%E8%AF%86%E4%B8%93%E9%A2%98%E4%B9%8BGCD%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%BA%8C/"/>
+    <id>http://yoursite.com/2017/10/22/iOS知识专题之GCD学习笔记二/</id>
+    <published>2017-10-22T01:13:12.000Z</published>
+    <updated>2018-03-20T04:29:21.756Z</updated>
     
     <content type="html"><![CDATA[<p><strong>说明:</strong>和上一篇GCD学习笔记一样,本篇文章主要内容还是来自于<a href="https://github.com/nixzhu/dev-blog/blob/master/2014-04-19-grand-central-dispatch-in-depth-part-1.md" target="_blank" rel="external">这篇博客</a>。笔者只是对内容进行了少量的修改并加入了自己的一些总结，供后续查阅。</p>
 <h2 id="GCD常用函数使用详解"><a href="#GCD常用函数使用详解" class="headerlink" title="GCD常用函数使用详解"></a>GCD常用函数使用详解</h2><h4 id="一、用-dispatch-async-处理后台任务"><a href="#一、用-dispatch-async-处理后台任务" class="headerlink" title="一、用 dispatch_async 处理后台任务"></a>一、用 dispatch_async 处理后台任务</h4><p><code>dispatch_async</code> 添加一个 Block 到队列就立即返回了。任务会在之后由 GCD 决定执行。当你需要在后台执行一个基于网络或 CPU 紧张的任务时就使用 dispatch_async ，这样就不会阻塞当前线程。例如:</p>
@@ -324,48 +361,11 @@ dispatch_source_create(dispatch_source_type_t type,
   </entry>
   
   <entry>
-    <title>iOS知识专题之AR开发框架Vuforia学习笔记</title>
-    <link href="http://yoursite.com/2018/03/16/iOS%E7%9F%A5%E8%AF%86%E4%B8%93%E9%A2%98%E4%B9%8BAR%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6Vuforia%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    <id>http://yoursite.com/2018/03/16/iOS知识专题之AR开发框架Vuforia学习笔记/</id>
-    <published>2018-03-16T04:23:59.000Z</published>
-    <updated>2018-03-16T11:55:57.058Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><a href="https://developer.vuforia.com" target="_blank" rel="external">Vuforia</a>是一个知名的AR开发框架，同时支持iOS和Android开发平台。</p>
-<p>众所周知，苹果在iOS11推出了自己的AR开发框架ARKit，但是仍有较大的局限性，比如在硬件上只支持iPhone6s及以后的设备，包括iPhoneSE，主要是需要A9以上的芯片支持；而Android端目前还没有官方统一的AR支持框架。所以在需要进行移动端的AR开发时，Vuforia框架是一个不错的选择。</p>
-<p>本文其实是自己研究Vuforia框架的学习笔记，仅供参考，如有错误请批评指正。</p>
-<a id="more"></a>
-<h2 id="几个比较重要的类"><a href="#几个比较重要的类" class="headerlink" title="几个比较重要的类"></a>几个比较重要的类</h2><p>Vuforia官方提供了三种类型的API:Unity,C++和Java。三种类型API的内容都是一一对应的，所以只需要选择适合自己的一种API进行学习使用即可。</p>
-<h3 id="Vuforia-State"><a href="#Vuforia-State" class="headerlink" title="Vuforia::State"></a>Vuforia::State</h3><p>State中保存了当前AR环境中的摄像机帧和所有的trackables可跟踪对象。和Frame类似，State是个轻量级的对象，它的数据实际上保存在多个（其他类的）实例中。从State中查询的Trackables不能和从tracker中查询的Trackables指针比较，即使它们可能引用的是同一个对象。从state中查询的Trackables代表AR状态中临时的，不可变的view,因此不能修改。要想修改它们，必须从Tracker中查询它们。</p>
-<p>在State中可能会包含有多个TrackableResult，因此可以从State中可以获取当前的某个TrackableResult对象。</p>
-<h3 id="Vuforia-TrackableResult"><a href="#Vuforia-TrackableResult" class="headerlink" title="Vuforia::TrackableResult"></a>Vuforia::TrackableResult</h3><p>顾名思义，TrackableResult其实就是一个“跟踪的结果”，代表的是一个Trackable 在某一帧中的状态。</p>
-<p>我们可以通过其实例方法获取到当前结果的各种参数，包括Pose(当前的姿势或位置矩阵)和Trackable （可跟踪的对象）。</p>
-<h3 id="Vuforia-Trackable"><a href="#Vuforia-Trackable" class="headerlink" title="Vuforia::Trackable"></a>Vuforia::Trackable</h3><p>Trackable是所有可被跟踪对象的基类。子类主要包括，锚点类，可跟踪的设备，模型，以及单词word等。</p>
-<p>使用它的实例方法我们可以获取到当前被跟踪对象的名称，类型，是否extended tracking可扩展跟踪等信息。</p>
-<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ol>
-<li><a href="https://developer.vuforia.com" target="_blank" rel="external">Vuforia官方网站</a></li>
-<li><a href="https://library.vuforia.com/content/vuforia-library/en/reference/cpp/index.html" target="_blank" rel="external">Vuforia框架C++ API索引</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://developer.vuforia.com&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Vuforia&lt;/a&gt;是一个知名的AR开发框架，同时支持iOS和Android开发平台。&lt;/p&gt;
-&lt;p&gt;众所周知，苹果在iOS11推出了自己的AR开发框架ARKit，但是仍有较大的局限性，比如在硬件上只支持iPhone6s及以后的设备，包括iPhoneSE，主要是需要A9以上的芯片支持；而Android端目前还没有官方统一的AR支持框架。所以在需要进行移动端的AR开发时，Vuforia框架是一个不错的选择。&lt;/p&gt;
-&lt;p&gt;本文其实是自己研究Vuforia框架的学习笔记，仅供参考，如有错误请批评指正。&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="Vuforia AR" scheme="http://yoursite.com/tags/Vuforia-AR/"/>
-    
-  </entry>
-  
-  <entry>
     <title>iOS知识专题之GCD学习笔记一</title>
-    <link href="http://yoursite.com/2018/03/12/iOS%E7%9F%A5%E8%AF%86%E4%B8%93%E9%A2%98%E4%B9%8BGCD%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80/"/>
-    <id>http://yoursite.com/2018/03/12/iOS知识专题之GCD学习笔记一/</id>
-    <published>2018-03-12T01:20:08.000Z</published>
-    <updated>2018-03-19T05:18:01.307Z</updated>
+    <link href="http://yoursite.com/2017/10/21/iOS%E7%9F%A5%E8%AF%86%E4%B8%93%E9%A2%98%E4%B9%8BGCD%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80/"/>
+    <id>http://yoursite.com/2017/10/21/iOS知识专题之GCD学习笔记一/</id>
+    <published>2017-10-21T01:20:08.000Z</published>
+    <updated>2018-03-20T04:29:40.148Z</updated>
     
     <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>GCD是iOS和Mac OS X开发中处理并发的一个重要的底层技术，并且代码是开源的(<a href="https://opensource.apple.com/source/libdispatch/" target="_blank" rel="external">代码地址</a>)。它具有以下优点:</p>
 <ul>
